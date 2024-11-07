@@ -6,8 +6,15 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./mysql:/app
+      - ./code/server/mysql:/app
       - ./mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: KOMORA150813072002
     restart: always
+  server:
+    image: node:23
+    ports:
+      - 3000:3000
+    volumes:
+      - ./code/server:/app
+    tty: true
