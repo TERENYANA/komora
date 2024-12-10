@@ -1,0 +1,11 @@
+/* 
+styles communs à toutes les  pages
+*/
+
+/*  
+reset CSS
+*/
+*{
+    box-sizing: border-box;
+
+}

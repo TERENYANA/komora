@@ -22,7 +22,6 @@ class Server {
         //préfixe à toutes les routes d'un router
         this.router.use('/', new HomepageRouter().getRoutes());
         this.router.use("/role",new RoleRouter().getRoutes());
-        
         this.router.use("*",new NotFoundRouter().getRoutes());
     }
     //créer le serveur 

@@ -18,3 +18,11 @@ services:
     volumes:
       - ./code/server:/app
     tty: true
+  client:
+    image: node:23
+    ports:
+      - 5173:5173
+    volumes:
+      - ./code/client:/app
+    tty: true
+
