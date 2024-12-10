@@ -33,7 +33,7 @@ CREATE TABLE komora_dev.category(
 
 
 
-CREATE TABLE komora_dev.client(
+CREATE TABLE komora_dev.user(
     id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
@@ -48,13 +48,13 @@ CREATE TABLE komora_dev.client(
     FOREIGN KEY(address_id) REFERENCES address(id)
 );
 
-CREATE TABLE komora_dev.client_address(
+CREATE TABLE komora_dev.user_address(
 address_id TINYINT UNSIGNED ,
-client_id TINYINT UNSIGNED,
+user_id TINYINT UNSIGNED,
 FOREIGN KEY (address_id) REFERENCES address(id),
-FOREIGN KEY (client_id) REFERENCES client(id),
+FOREIGN KEY (user_id) REFERENCES user(id),
 -- clé primaire composite
-PRIMARY KEY (address_id, client_id)
+PRIMARY KEY (address_id, user_id)
 );
 
 
@@ -63,8 +63,8 @@ CREATE TABLE komora_dev.orders(
     id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     totalprice DECIMAL (10, 2) NOT NULL,
     date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    client_id  TINYINT UNSIGNED,
-    FOREIGN KEY (client_id) REFERENCES client(id)
+    user_id  TINYINT UNSIGNED,
+    FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
 CREATE TABLE komora_dev.product(
@@ -81,7 +81,8 @@ CREATE TABLE komora_dev.product(
     FOREIGN KEY(brand_id) REFERENCES brand(id)
 );
 
-CREATE TABLE komora_dev.orders_details(
+
+CREATE TABLE komora_dev.order_details(
     id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     quantity TINYINT NOT NULL,
     product_id TINYINT UNSIGNED,
@@ -136,7 +137,7 @@ VALUES
     (NULL, 'Chemicals', 1)
 ;
 
-INSERT INTO komora_dev.client
+INSERT INTO komora_dev.user
 VALUES
     (NULL, 'Roman', 'Kovalchuk', 'omniagapao@gmail.com', '12345678', '+353871096850', 'Liberty Square', 'Thurles', 1, 1 ),
     (NULL, 'Yana', 'Yuskiv', 'jmniagapao47@gmail.com', '7676787', '+788776656577', 'Sun Square', 'Paris', 2, 1 ),
@@ -154,7 +155,7 @@ VALUES
     (NULL, 'Lina', 'Berg', 'lina.berg@gmail.com', 'lina!pass', '+49123456789', 'Alexanderplatz', 'Berlin', 2, 6)
  ;
 
-INSERT INTO komora_dev.client_address
+INSERT INTO komora_dev.user_address
 VALUES
     (3,9),
     (5,8),
@@ -211,8 +212,8 @@ VALUES
 -- UPDATE projet_dev.school
 -- SET permet de cibler les colonnes à mettre à jour , et leur affectuer une nouvelle valeur 
 -- SET 
--- school.manager =Mme Marbrouka
--- WHERE permet de créer une condition ,cibler une colonne e tune valeur
+-- school.manager = 
+-- WHERE permet de créer une condition ,cibler une colonne et une valeur
 -- supprimer un enregistrement
 -- DELETE FROM projet_dev.school
 

@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import HomepageController from "../controller/homepage.controller.js"
+import HomepageController from "../controller/homepage_controller.js"
 class HomepageRouter{
     //propriétés
     private router = express.Router();

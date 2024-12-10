@@ -1,0 +1,7 @@
+type Order_details = {
+    id: number;
+    quantity: number;
+    product_id: number;
+    orders_id: number;
+};
+export default Order_details;
