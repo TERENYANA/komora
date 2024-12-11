@@ -12,15 +12,15 @@
                 "dsznajder.es7-react-js-snippets"
             ],
             "settings": {
-                "[javascript]": {
+                "[javascriptreact]": {
                     "editor.defaultFormatter": "biomejs.biome",
                     "editor.formatOnSave": true,
                     "editor.formatOnType": true
       },
-                "[typescript]": {
+                "[typescriptreact]": {
                     "editor.defaultFormatter": "biomejs.biome",
                     "editor.formatOnSave": true,
-                    "editor.formatOnType": true
+                    "editor.formatOnType": true 
       }
     
         }}
