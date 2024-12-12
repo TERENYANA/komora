@@ -3,7 +3,9 @@ import styles from "../../assets/css/nav.module.css";
 import { useRef, useState } from "react";
 
 const Nav = () => {
-	const siteNav = useRef();
+	// créer une référence :lien vers un élement HTML remplace l'utilisation de quiry Selector /qyuery selector All 
+	// const réference = useRef<type de l'élement ciblé> (valeur initiale de la référence)
+	const siteNav = useRef<HTMLDivElement>(null);
 	//click sur le bouton de navigation mobile
 	//créer un état :useState
 	// const [état, setter de l'état] = useState<typer l'état>(valeur initiale de l'état)
