@@ -82,7 +82,7 @@ CREATE TABLE komora_dev.product(
 );
 
 
-CREATE TABLE komora_dev.order_details(
+CREATE TABLE komora_dev.orders_details(
     id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     quantity TINYINT NOT NULL,
     product_id TINYINT UNSIGNED,
@@ -98,7 +98,7 @@ CREATE TABLE komora_dev.order_details(
 INSERT INTO komora_dev.role
 VALUES
     (NULL, 'admin'),
-    (NULL, 'client')
+    (NULL, 'user')
     ;
 
 INSERT INTO komora_dev.brand

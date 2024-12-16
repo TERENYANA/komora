@@ -1,11 +1,11 @@
 import type { Request,Response } from "express";
-import RoleRepository from "../repository/role_repository.js";
+import AddressRepository from "../repository/address_repository.js";
 
 
-class RoleController {
+class AddressController {
     public index = async (req: Request, res: Response) => {
         //récupérer tous les enregistrements
-        const results = await new RoleRepository().selectAll();
+        const results = await new AddressRepository().selectAll();
         //si la requet SQL renvoie une error 
         if (results instanceof Error) {
             res.status(400).json({
@@ -29,7 +29,7 @@ class RoleController {
     public one = async (req: Request, res: Response) => {
         //récupérer tous les enregistrements
         //req.params permet de récupérer les variables de route
-        const results = await new RoleRepository().selectOne(req.params);
+        const results = await new AddressRepository().selectOne(req.params);
         //si la requet SQL renvoie une error 
         if (results instanceof Error) {
             res.status(400).json({
@@ -51,4 +51,4 @@ class RoleController {
         
     }
 }
-export default RoleController;
+export default AddressController;

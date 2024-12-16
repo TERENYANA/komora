@@ -1,8 +1,14 @@
+import Address from "../model/Address.js";
+import User from "../model/User.js";
+import User_address from "../model/User_address.js";
 import MySQLService from "../service/mysql_service.js";
-import type Role from "../model/Role.js";
-class RoleRepository {
-    private table = "role";
-    public selectAll = async (): Promise<Role[] | unknown> => {
+import AddressRepository from "./address_repository.js";
+import UserRepository from "./user_repository.js";
+
+
+class UserAddressRepository {
+    private table = "user_address";
+    public selectAll = async (): Promise<User_address[] | unknown> => {
         //connexion au serveur MySQL
     
         //récupérer un enregistrement par sa clé primaire
@@ -21,6 +27,27 @@ class RoleRepository {
             //récupérer les résultat de la requète 
             //resultes represente le premier indice du du arrey 
             const [results] = await connection.execute(sql);
+
+            for (let i = 0; i < (results as User_address[]).length; i++) {
+                const result = (results as User_address[])[i];
+
+
+                result.adress = (await new AddressRepository().selectOne({
+                    id: result.address_id,
+                })) as Address;
+
+
+                for (let i = 0; i < (results as User_address[]).length; i++) {
+                    const result = (results as User_address[])[i];
+    
+    
+                    result.user = (await new UserRepository().selectOne({
+                        id: result.user_id,
+                    })) as User;
+    
+                    return result;
+                }
+            }
             //si la requête a réussie
             return results;
         } catch (error) {
@@ -31,7 +58,7 @@ class RoleRepository {
         ;
     };
 
-    public selectOne = async (data: Partial <Role>): Promise<Role | unknown> => {
+    public selectOne = async (data: Partial <User_address>): Promise<User_address | unknown> => {
         //connexion au serveur MySQL
         //récupérer un enregistrement par sa clé primaire
    
@@ -54,14 +81,18 @@ class RoleRepository {
         // try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
         try {
             
+        
             //récupérer les résultat de la requète 
             //resultes represente le premier indice du du arrey 
             // requetes préparées 
             //data permet de définir une valeur aux variable de reequêtes SQL
             const [results] = await connection.execute(sql, data);
+
+          
             //si la requête a réussie
             //récupérer le premier indice dan array
-            const result = (results as Role[]).shift();
+            const result = (results as User_address[]).shift();
+            
             return results;
         } catch (error) {
             // si la requète a échoée
@@ -72,4 +103,4 @@ class RoleRepository {
     };
 }
 
-export default RoleRepository;
+export default UserAddressRepository;

@@ -1,8 +1,7 @@
 import type { Request,Response } from "express";
 import RoleRepository from "../repository/role_repository.js";
 
-
-class RoleController {
+class OrdersDetailsController {
     public index = async (req: Request, res: Response) => {
         //récupérer tous les enregistrements
         const results = await new RoleRepository().selectAll();
@@ -51,4 +50,4 @@ class RoleController {
         
     }
 }
-export default RoleController;
+export default OrdersDetailsController;

@@ -1,12 +1,13 @@
+import Category from "../model/Category.js";
 import MySQLService from "../service/mysql_service.js";
-import type Role from "../model/Role.js";
-class RoleRepository {
-    private table = "role";
-    public selectAll = async (): Promise<Role[] | unknown> => {
+
+class CategoryRepository {
+    private table = "category";
+    public selectAll = async (): Promise<Category[] | unknown> => {
         //connexion au serveur MySQL
-    
+
         //récupérer un enregistrement par sa clé primaire
-       
+
         const connection = await new MySQLService().connect();
 
         // roquête SQL
@@ -16,25 +17,35 @@ class RoleRepository {
              FROM
                 ${process.env.MYSQL_DATABASE}.${this.table};`
         //exécuter la requête 
-        // try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
+        // try / catch permet d'exécuter une instruction , si l'instruction a échoué , une error est récupérée
         try {
             //récupérer les résultat de la requète 
             //resultes represente le premier indice du du arrey 
             const [results] = await connection.execute(sql);
+
+            for (let i = 0; i < (results as Category[]).length; i++) {
+                const result = (results as Category[])[i];
+
+
+                result.category = (await new CategoryRepository().selectOne({
+                    id: result.parent_id,
+                })) as Category;
+            }
+
             //si la requête a réussie
             return results;
         } catch (error) {
             // si la requète a échoée
             return error;
-                
+
         }
         ;
     };
 
-    public selectOne = async (data: Partial <Role>): Promise<Role | unknown> => {
+    public selectOne = async (data: Partial<Category>): Promise<Category | unknown> => {
         //connexion au serveur MySQL
         //récupérer un enregistrement par sa clé primaire
-   
+
 
         const connection = await new MySQLService().connect();
 
@@ -49,11 +60,10 @@ class RoleRepository {
         WHERE 
              ${this.table}.id = :id;`
             ;
-                 
+
         //exécuter la requête  
         // try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
         try {
-            
             //récupérer les résultat de la requète 
             //resultes represente le premier indice du du arrey 
             // requetes préparées 
@@ -61,15 +71,21 @@ class RoleRepository {
             const [results] = await connection.execute(sql, data);
             //si la requête a réussie
             //récupérer le premier indice dan array
-            const result = (results as Role[]).shift();
+            const result = (results as Category[]).shift() as Category;
+
+            result.category = (await new CategoryRepository().selectOne({
+                id: result.parent_id,
+            })) as Category;
+
+
             return results;
         } catch (error) {
             // si la requète a échoée
             return error;
-            
+
         }
         ;
     };
 }
 
-export default RoleRepository;
+export default CategoryRepository;

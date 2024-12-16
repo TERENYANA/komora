@@ -1,8 +1,13 @@
 import MySQLService from "../service/mysql_service.js";
-import type Role from "../model/Role.js";
-class RoleRepository {
-    private table = "role";
-    public selectAll = async (): Promise<Role[] | unknown> => {
+import Product from "../model/Product.js";
+import CategoryRepository from "./category_repository.js";
+import Category from "../model/Category.js";
+import BrandRepository from "./brand_repository.js";
+import Brand from "../model/Brand.js";
+
+class ProductRepository {
+    private table = "product";
+    public selectAll = async (): Promise<Product[] | unknown> => {
         //connexion au serveur MySQL
     
         //récupérer un enregistrement par sa clé primaire
@@ -21,8 +26,27 @@ class RoleRepository {
             //récupérer les résultat de la requète 
             //resultes represente le premier indice du du arrey 
             const [results] = await connection.execute(sql);
-            //si la requête a réussie
-            return results;
+            for (let i = 0; i < (results as Product[]).length; i++) {
+                const result = (results as Product[])[i];
+
+
+                result.category = (await new CategoryRepository().selectOne({
+                    id: result.category_id,
+                })) as Category;
+
+                for (let i = 0; i < (results as Product[]).length; i++) {
+                    const result = (results as Product[])[i];
+
+
+                    result.brand = (await new BrandRepository().selectOne({
+                        id: result.brand_id,
+                    })) as Brand;
+
+                    
+                    //si la requête a réussie
+                    return results;
+                }
+            }
         } catch (error) {
             // si la requète a échoée
             return error;
@@ -31,7 +55,7 @@ class RoleRepository {
         ;
     };
 
-    public selectOne = async (data: Partial <Role>): Promise<Role | unknown> => {
+    public selectOne = async (data: Partial <Product>): Promise<Product | unknown> => {
         //connexion au serveur MySQL
         //récupérer un enregistrement par sa clé primaire
    
@@ -53,7 +77,6 @@ class RoleRepository {
         //exécuter la requête  
         // try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
         try {
-            
             //récupérer les résultat de la requète 
             //resultes represente le premier indice du du arrey 
             // requetes préparées 
@@ -61,7 +84,7 @@ class RoleRepository {
             const [results] = await connection.execute(sql, data);
             //si la requête a réussie
             //récupérer le premier indice dan array
-            const result = (results as Role[]).shift();
+            const result = (results as Product[]).shift();
             return results;
         } catch (error) {
             // si la requète a échoée
@@ -72,4 +95,4 @@ class RoleRepository {
     };
 }
 
-export default RoleRepository;
+export default ProductRepository;
