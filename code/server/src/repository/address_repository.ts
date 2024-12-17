@@ -28,6 +28,37 @@ class AddressRepository {
         ;
     };
 
+    // récupérer les enregistrement selon une liste
+    public selectInList = async (list:string): Promise<Address[] | unknown> => {
+
+//connexion au serveur MYSQL
+        const connection = await new MySQLService().connect();
+
+// SELECT classroom. * FROM 
+        const sql = `
+            SELECT 
+                ${this.table}.*
+            FROM
+                ${process.env.MYSQL_DATABASE}.${this.table}
+            WHERE
+                ${this.table}.id IN (${list})
+                ;`
+        
+        try {
+
+            const [results] = await connection.execute(sql);
+
+            return results;
+    
+        } catch (error) {
+
+            return error;
+
+        }
+        ;
+    };
+
+
     public selectOne = async (data: Partial<Address>): Promise<Address | unknown> => {
         //connexion au serveur MySQL
         //récupérer un enregistrement par sa clé primaire

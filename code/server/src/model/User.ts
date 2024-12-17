@@ -1,4 +1,5 @@
-import Orders from "./Orders.js";
+import Address from "./Address.js";
+import Order from "./Order.js";
 import Role from "./Role.js";
 
 type User = {
@@ -12,7 +13,9 @@ type User = {
     city: string;
     role_id: number;
     role: Role;
-    orders_id: number;
-    orders: Orders;
+    order_id: number;
+    order: Order;
+    address_ids: string;
+    addresses: Address[];
 };
 export default User;

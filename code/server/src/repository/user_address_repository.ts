@@ -27,27 +27,10 @@ class UserAddressRepository {
             //récupérer les résultat de la requète 
             //resultes represente le premier indice du du arrey 
             const [results] = await connection.execute(sql);
-
-            for (let i = 0; i < (results as User_address[]).length; i++) {
-                const result = (results as User_address[])[i];
-
-
-                result.adress = (await new AddressRepository().selectOne({
-                    id: result.address_id,
-                })) as Address;
-
-
-                for (let i = 0; i < (results as User_address[]).length; i++) {
-                    const result = (results as User_address[])[i];
     
-    
-                    result.user = (await new UserRepository().selectOne({
-                        id: result.user_id,
-                    })) as User;
-    
-                    return result;
-                }
-            }
+                    return results;
+                
+            
             //si la requête a réussie
             return results;
         } catch (error) {
@@ -93,7 +76,7 @@ class UserAddressRepository {
             //récupérer le premier indice dan array
             const result = (results as User_address[]).shift();
             
-            return results;
+            return result;
         } catch (error) {
             // si la requète a échoée
             return error;

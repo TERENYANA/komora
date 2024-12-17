@@ -7,8 +7,8 @@ import cors from "cors"
 import AddressRouter from "../router/address_router.js";
 import BrandRouter from "../router/brand_router.js";
 import CategoryRouter from "../router/category_router.js";
-import OrdersRouter from "../router/orders_router.js";
-import OrdersDetailsRouter from "../router/orders_details_router.js";
+import OrderRouter from "../router/order_router.js";
+import OrderDetailRouter from "../router/order_detail_router.js";
 import ProductRouter from "../router/product_router.js";
 import UserAddressRouter from "../router/user_address_router.js";
 import UserRouter from "../router/user_router.js";
@@ -41,11 +41,11 @@ class Server {
         this.router.use("/role", new RoleRouter().getRoutes());
         this.router.use("/address", new AddressRouter().getRoutes());
         this.router.use("/brand", new BrandRouter().getRoutes());
-        this.router.use("/categoty", new CategoryRouter().getRoutes());
-        this.router.use("/orders_details", new OrdersDetailsRouter().getRoutes());
-        this.router.use("/orders", new OrdersRouter().getRoutes());
+        this.router.use("/category", new CategoryRouter().getRoutes());
+        this.router.use("/order_detail", new OrderDetailRouter().getRoutes());
+        this.router.use("/order", new OrderRouter().getRoutes());
         this.router.use("/product", new ProductRouter().getRoutes());
-        this.router.use("/orders", new OrdersDetailsRouter().getRoutes());
+        this.router.use("/order", new OrderDetailRouter().getRoutes());
         this.router.use("/user_address", new UserAddressRouter().getRoutes());
         this.router.use("/user", new UserRouter().getRoutes());
 

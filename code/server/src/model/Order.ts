@@ -1,10 +1,10 @@
 import User from "./User.js";
 
-type Orders = {
+type Order = {
     id: number;
     totalprice: number;
     date: number;
     user_id: number;
     user: User;
 };
-export default Orders;
+export default Order;

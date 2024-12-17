@@ -4,9 +4,9 @@ class RoleRepository {
     private table = "role";
     public selectAll = async (): Promise<Role[] | unknown> => {
         //connexion au serveur MySQL
-    
+
         //récupérer un enregistrement par sa clé primaire
-       
+
         const connection = await new MySQLService().connect();
 
         // roquête SQL
@@ -26,15 +26,15 @@ class RoleRepository {
         } catch (error) {
             // si la requète a échoée
             return error;
-                
+
         }
         ;
     };
 
-    public selectOne = async (data: Partial <Role>): Promise<Role | unknown> => {
+    public selectOne = async (data: Partial<Role>): Promise<Role | unknown> => {
         //connexion au serveur MySQL
         //récupérer un enregistrement par sa clé primaire
-   
+
 
         const connection = await new MySQLService().connect();
 
@@ -49,11 +49,11 @@ class RoleRepository {
         WHERE 
              ${this.table}.id = :id;`
             ;
-                 
+
         //exécuter la requête  
         // try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
         try {
-            
+
             //récupérer les résultat de la requète 
             //resultes represente le premier indice du du arrey 
             // requetes préparées 
@@ -62,11 +62,13 @@ class RoleRepository {
             //si la requête a réussie
             //récupérer le premier indice dan array
             const result = (results as Role[]).shift();
-            return results;
+
+
+            return result;
         } catch (error) {
             // si la requète a échoée
             return error;
-            
+
         }
         ;
     };

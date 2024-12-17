@@ -30,10 +30,12 @@ class CategoryRepository {
                 result.category = (await new CategoryRepository().selectOne({
                     id: result.parent_id,
                 })) as Category;
+
+                return results;
             }
 
             //si la requête a réussie
-            return results;
+            
         } catch (error) {
             // si la requète a échoée
             return error;

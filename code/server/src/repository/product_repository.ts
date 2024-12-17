@@ -34,19 +34,16 @@ class ProductRepository {
                     id: result.category_id,
                 })) as Category;
 
-                for (let i = 0; i < (results as Product[]).length; i++) {
-                    const result = (results as Product[])[i];
-
-
-                    result.brand = (await new BrandRepository().selectOne({
+                result.brand = (await new BrandRepository().selectOne({
                         id: result.brand_id,
-                    })) as Brand;
+                })) as Brand;
 
                     
                     //si la requête a réussie
                     return results;
                 }
-            }
+               
+            
         } catch (error) {
             // si la requète a échoée
             return error;

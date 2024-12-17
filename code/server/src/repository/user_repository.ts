@@ -2,8 +2,11 @@ import MySQLService from "../service/mysql_service.js";
 import User from "../model/User.js";
 import RoleRepository from "./role_repository.js";
 import Role from "../model/Role.js";
-import Orders from "../model/Orders.js";
-import OrdersRepository from "./orders_repository.js";
+import Order from "../model/Order.js";
+import OrderRepository from "./order_repository.js";
+import { join } from "node:path";
+import AddressRepository from "./address_repository.js";
+import Address from "../model/Address.js";
 
 class UserRepository {
     private table = "user";
@@ -15,9 +18,23 @@ class UserRepository {
 
         const sql = `
             SELECT 
-                ${this.table}.*
+                ${this.table}.*,
+                GROUP_CONCAT(address.id) AS address_ids
              FROM
-                ${process.env.MYSQL_DATABASE}.${this.table};`
+                ${process.env.MYSQL_DATABASE}.${this.table}
+             LEFT JOIN
+                ${process.env.MYSQL_DATABASE}.user_address
+            ON
+                user_address.user_id = ${this.table}.id
+            LEFT JOIN
+                ${process.env.MYSQL_DATABASE}.address
+            ON
+                user_address.address_id =address.id
+            GROUP BY 
+                ${this.table}.id
+            ;`
+            ;
+
 
         try {
 
@@ -30,18 +47,12 @@ class UserRepository {
                     id: result.role_id,
                 })) as Role;
 
-
-                for (let i = 0; i < (results as User[]).length; i++) {
-                    const result = (results as User[])[i];
+                result.addresses = (await new AddressRepository().selectInList(result.address_ids)) as Address[];
 
 
-                    result.orders = (await new UserRepository().selectOne({
-                        id: result.orders_id,
-                    })) as Orders;
-
-                    return result;
-                }
             }
+
+            return results;
         } catch (error) {
 
             return error;
@@ -57,15 +68,28 @@ class UserRepository {
 
         const connection = await new MySQLService().connect();
 
-
         const sql = `
         SELECT 
-            ${this.table}.*
-        FROM
+            ${this.table}.*,
+            GROUP_CONCAT(address.id) AS address_ids
+         FROM
             ${process.env.MYSQL_DATABASE}.${this.table}
-        WHERE 
-             ${this.table}.id = :id;`
+
+        JOIN
+            ${process.env.MYSQL_DATABASE}.user_address
+        ON
+            user_address.user_id = ${this.table}.id
+        JOIN
+            ${process.env.MYSQL_DATABASE}.address
+        ON
+            user_address.address_id =address.id
+                WHERE 
+             ${this.table}.id = :id
+        GROUP BY 
+            ${this.table}.id
+        ;`
             ;
+
 
 
         try {
@@ -75,8 +99,11 @@ class UserRepository {
 
             result.role = (await new RoleRepository().selectOne({
                 id: result.role_id,
-
             })) as Role;
+
+            result.addresses = (await new AddressRepository().selectInList(result.address_ids)) as Address[];
+
+
             return result;
 
         } catch (error) {

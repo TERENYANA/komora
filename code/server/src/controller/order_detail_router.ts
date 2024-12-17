@@ -1,10 +1,10 @@
 import type { Request,Response } from "express";
-import RoleRepository from "../repository/role_repository.js";
+import OrderDetailRepository from "../repository/order_detail_repository.js";
 
-class OrdersDetailsController {
+class OrderDetailController {
     public index = async (req: Request, res: Response) => {
         //récupérer tous les enregistrements
-        const results = await new RoleRepository().selectAll();
+        const results = await new OrderDetailRepository().selectAll();
         //si la requet SQL renvoie une error 
         if (results instanceof Error) {
             res.status(400).json({
@@ -28,7 +28,7 @@ class OrdersDetailsController {
     public one = async (req: Request, res: Response) => {
         //récupérer tous les enregistrements
         //req.params permet de récupérer les variables de route
-        const results = await new RoleRepository().selectOne(req.params);
+        const results = await new OrderDetailRepository().selectOne(req.params);
         //si la requet SQL renvoie une error 
         if (results instanceof Error) {
             res.status(400).json({
@@ -50,4 +50,4 @@ class OrdersDetailsController {
         
     }
 }
-export default OrdersDetailsController;
+export default OrderDetailController;

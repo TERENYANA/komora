@@ -14,15 +14,15 @@ SELECT
     user.id,
     user.firstname,
     user.lastname,
-    orders.totalprice,
-    orders.date,
+    order.totalprice,
+    order.date,
     GROUP_CONCAT(address.name) AS adresses
 FROM
    komora_dev.user
 JOIN  
-    komora_dev.orders
+    komora_dev.order
 ON 
-    orders.client_id=client.id
+    order.client_id=client.id
 JOIN
     komora_dev.address
 JOIN
@@ -35,7 +35,7 @@ GROUP BY
     user.id,
     user.firstname,
     user.lastname,
-    orders.totalprice,
-    orders.date
+    order.totalprice,
+    order.date
 ;
   

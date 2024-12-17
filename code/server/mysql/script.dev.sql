@@ -39,7 +39,7 @@ CREATE TABLE komora_dev.user(
     lastname VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     password CHAR(60) NOT NULL,
-    phone VARCHAR(15) NOT NULL,
+    number VARCHAR(15) NOT NULL,
     address VARCHAR(300) NOT NULL,
     city VARCHAR(50)  NOT NULL,
     role_id TINYINT UNSIGNED ,
@@ -82,13 +82,13 @@ CREATE TABLE komora_dev.product(
 );
 
 
-CREATE TABLE komora_dev.orders_details(
+CREATE TABLE komora_dev.order_detail(
     id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     quantity TINYINT NOT NULL,
     product_id TINYINT UNSIGNED,
-    orders_id TINYINT UNSIGNED,
+    order_id TINYINT UNSIGNED,
     FOREIGN KEY(product_id) REFERENCES product(id),
-    FOREIGN KEY(orders_id) REFERENCES orders(id)
+    FOREIGN KEY(order_id) REFERENCES orders(id)
 );
 
 -- créer des enregistrements
@@ -194,7 +194,7 @@ VALUES
     (NULL,'Chicorée Rôtie', 'Chicorée rôtie pour une saveur plus intense', 3.20, 'https://example.com/chicoree_rotie.jpg', 0.25, 70, 2, 2)
     ;
 
-INSERT INTO komora_dev.orders_details
+INSERT INTO komora_dev.order_detail
 VALUES
     (NULL,5,1,1),
     (NULL,7,9,2),

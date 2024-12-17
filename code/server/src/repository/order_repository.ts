@@ -1,11 +1,11 @@
 import MySQLService from "../service/mysql_service.js";
-import Orders_details from"../model/Orders_details.js"
-import OrdersRepository from "./orders_repository.js";
-import Orders from "../model/Orders.js";
+import Order from "../model/Order.js";
+import UserRepository from "./user_repository.js";
+import User from "../model/User.js";
 
-class OrdersDetailsRepository {
-    private table = "orders_details";
-    public selectAll = async (): Promise<Orders_details[] | unknown> => {
+class OrderRepository {
+    private table = "orders";
+    public selectAll = async (): Promise<Order[] | unknown> => {
 
 
         const connection = await new MySQLService().connect();
@@ -21,16 +21,18 @@ class OrdersDetailsRepository {
 
             const [results] = await connection.execute(sql);
 
-            for (let i = 0; i < (results as Orders_details[]).length; i++) {
-                const result = (results as Orders_details[])[i];
+            for (let i = 0; i < (results as Order[]).length; i++) {
+                const result = (results as Order[])[i];
 
 
-                result.orders = (await new OrdersRepository().selectOne({
-                    id: result.orders_id,
-                })) as Orders;
+                result.user = (await new UserRepository().selectOne({
+                    id: result.user_id,
+                })) as User;
 
                 return results;
             }
+
+            
         } catch (error) {
 
             return error;
@@ -39,7 +41,7 @@ class OrdersDetailsRepository {
         ;
     };
 
-    public selectOne = async (data: Partial<Orders_details>): Promise<Orders_details | unknown> => {
+    public selectOne = async (data: Partial<Order>): Promise<Order | unknown> => {
         //connexion au serveur MySQL
         //récupérer un enregistrement par sa clé primaire
 
@@ -61,9 +63,9 @@ class OrdersDetailsRepository {
 
             const [results] = await connection.execute(sql, data);
 
-            const result = (results as Orders_details[]).shift();
+            const result = (results as Order[]).shift();
             return results;
-            
+
         } catch (error) {
             return error;
 
@@ -72,4 +74,4 @@ class OrdersDetailsRepository {
     };
 }
 
-export default OrdersDetailsRepository;
+export default OrderRepository;
