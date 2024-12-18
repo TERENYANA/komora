@@ -9,7 +9,7 @@ services:
       - ./code/server/mysql:/app
       - ./mysql-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: KOMORA150813072002 
+      MYSQL_ROOT_PASSWORD: KOMORA150813072002
     restart: always
   server:
     image: node:23
@@ -25,4 +25,15 @@ services:
     volumes:
       - ./code/client:/app
     tty: true
-
+    #mongo
+  mongodb:
+    image: mongo:8
+    ports:
+        - 27017:27017
+    volumes:
+      - ./code/server/mongodb:/app
+      - ./mongodb-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    restart: always

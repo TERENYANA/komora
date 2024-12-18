@@ -1,0 +1,17 @@
+[
+    {
+        "email":"yanayuskiv6447@gmail.com",
+        "subject": "subject1",
+        "message":"message1"
+    },
+    {
+        "email":"yanina6447@gmail.com",
+        "subject": "subject2",
+        "message":"message2"
+    },
+    {
+        "email":"lala@gmail.com",
+        "subject": "subject3",
+        "message":"message3"
+    }
+]

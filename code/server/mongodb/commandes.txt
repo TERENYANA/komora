@@ -1,0 +1,13 @@
+// se connecter au serveur MongoDB
+mongosh -u root --authenticationDatabase admin -p
+show dbs
+use admin
+show collections
+dans des collections on a des doccuments
+exit
+//charger un fishier JS dans le serveur MongoDB
+mongoimport -d komora_dev -c contact --file contact.dev.json --jsonArray -u root --authenticationDatabase admin
+c collection 
+
+db.contact.find()
+subject1

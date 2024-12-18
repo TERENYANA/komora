@@ -1,0 +1,6 @@
+{
+    "name": "Komora - MongoGB",
+    "service": "mongodb",
+    "dockerComposeFile": "../../docker-compose.dev.yaml",
+    "workspaceFolder": "/app"
+}
