@@ -28,7 +28,7 @@ class RoleRepository {
             return error;
 
         }
-        ;
+        
     };
 
     public selectOne = async (data: Partial<Role>): Promise<Role | unknown> => {
@@ -70,7 +70,7 @@ class RoleRepository {
             return error;
 
         }
-        ;
+        
     };
 }
 

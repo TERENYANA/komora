@@ -10,11 +10,10 @@ const Header = () => {
 			<div className={styles["site-logo"]}>
 				{/* / pour cibler le dossier public */}
 				<Link to={"/"}>
-					<img src="/img/logo-komora-white.svg" alt="white logo" />
+					<img src="/img/komora-logo-x-size.svg" alt="white logo" />
 				</Link>
 			</div>
 			<Nav />
-           
 		</header>
 	);
 };

@@ -1,10 +1,9 @@
 import MySQLService from "../service/mysql_service.js";
-import Order_detail from "../model/Order_detail.js"
-import OrderRepository from "./order_repository.js";
-import Order from "../model/Order.js";
-import UserRepository from "./user_repository.js";
+import type Order_detail from "../model/Order_detail.js"
+import OrderRepository from "./orders_repository.js";
+import type Order from "../model/Orders.js";
 import ProductRepository from "./product_repository.js";
-import Product from "../model/Product.js";
+import type Product from "../model/Product.js";
 
 
 class OrderDetailRepository {
@@ -37,16 +36,16 @@ class OrderDetailRepository {
                     id: result.product_id,
                 })) as Product;
 
-                return result; 
+
             }
-           
-            
+            return results;
+
         } catch (error) {
 
             return error;
 
         }
-        ;
+
     };
 
     public selectOne = async (data: Partial<Order_detail>): Promise<Order_detail | unknown> => {
@@ -78,7 +77,7 @@ class OrderDetailRepository {
             return error;
 
         }
-        ;
+
     };
 }
 

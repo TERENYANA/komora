@@ -1,11 +1,11 @@
 import type { Request, Response } from "express";
-import OrderRepository from "../repository/order_repository.js";
+import OrdersRepository from "../repository/orders_repository.js";
 
 
-class OrderController {
+class OrdersController {
     public index = async (req: Request, res: Response) => {
 
-        const results = await new OrderRepository().selectAll();
+        const results = await new OrdersRepository().selectAll();
 
         if (results instanceof Error) {
             res.status(400).json({
@@ -27,7 +27,7 @@ class OrderController {
     }
     public one = async (req: Request, res: Response) => {
 
-        const results = await new OrderRepository().selectOne(req.params);
+        const results = await new OrdersRepository().selectOne(req.params);
 
         if (results instanceof Error) {
             res.status(400).json({
@@ -48,4 +48,4 @@ class OrderController {
 
     }
 }
-export default OrderController;
+export default OrdersController;

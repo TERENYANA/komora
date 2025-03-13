@@ -1,6 +1,6 @@
-import Address from "./Address.js";
-import Order from "./Order.js";
-import Role from "./Role.js";
+import type Address from "./Address.js";
+import type Order from "./Orders.js";
+import type Role from "./Role.js";
 
 type User = {
     id: number;
@@ -15,6 +15,7 @@ type User = {
     role: Role;
     order_id: number;
     order: Order;
+    //table de jointure: liste des identifiants concaténés > 2,4,7
     address_ids: string;
     addresses: Address[];
 };

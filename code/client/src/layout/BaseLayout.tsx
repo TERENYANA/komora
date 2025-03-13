@@ -8,7 +8,8 @@ import Footer from "../component/common/Footer";
 
 const BaseLayout = () => {
 return<>
-<Header/>
+    <Header />
+    
 {/* Outlet permet de définir l'emplecement du contenu particuier d'une page */}
 <Outlet/>
 <Footer/>

@@ -1,4 +1,4 @@
-import Category from "../model/Category.js";
+import type Category from "../model/Category.js";
 import MySQLService from "../service/mysql_service.js";
 
 class CategoryRepository {
@@ -31,9 +31,8 @@ class CategoryRepository {
                     id: result.parent_id,
                 })) as Category;
 
-                return results;
             }
-
+            return results;
             //si la requête a réussie
             
         } catch (error) {
@@ -41,7 +40,7 @@ class CategoryRepository {
             return error;
 
         }
-        ;
+        
     };
 
     public selectOne = async (data: Partial<Category>): Promise<Category | unknown> => {
@@ -60,7 +59,8 @@ class CategoryRepository {
         FROM
             ${process.env.MYSQL_DATABASE}.${this.table}
         WHERE 
-             ${this.table}.id = :id;`
+             ${this.table}.id = :id;
+        `
             ;
 
         //exécuter la requête  
@@ -86,7 +86,7 @@ class CategoryRepository {
             return error;
 
         }
-        ;
+        
     };
 }
 

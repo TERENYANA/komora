@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
-import KomoraShopAPI from "../../service/komora_shop_api";
-import type Role from "../../model/role";
+
+import CategoryAPI from "../../service/category_api";
+import type Category from "../../model/Category";
 
 const KomoraShop = () => {
 	// état pour stocker les résultats de la requete HTTP
-	const [categories, setCategories] = useState<Role[]>([]);
+	const [categories, setCategories] = useState<Category[]>([]);
 
 	// l'état , modification d'éat
 	// useEffect permet de déclencher des instructions à un moment de vie d'un composent :afficher,mis à jour un état ,déssafisher
 	useEffect(() => {
-		new KomoraShopAPI()
+		new CategoryAPI()
 			.selectAll()
 			.then((results) => setCategories(results.data));
 	}, []);
 
 	return (
 		<>
-			{categories.map((result) => (
-				<p>{result.name}</p>
-			))}
+			{categories.map((result) =>
+				result.parent_id === null ? (
+					<p key={Math.random()}>{result.name}</p>
+				) : (
+					""
+				),
+			)}
 		</>
 	);
 };

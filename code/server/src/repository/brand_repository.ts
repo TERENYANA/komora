@@ -1,5 +1,5 @@
 import MySQLService from "../service/mysql_service.js";
-import Brand from "../model/Brand.js";
+import type Brand from "../model/Brand.js";
 class BrandRepository {
     private table = "brand";
     public selectAll = async (): Promise<Brand[] | unknown> => {
@@ -28,7 +28,7 @@ class BrandRepository {
             return error;
 
         }
-        ;
+        
     };
 
     public selectOne = async (data: Partial<Brand>): Promise<Brand | unknown> => {
@@ -70,7 +70,7 @@ class BrandRepository {
             return error;
 
         }
-        ;
+        
     };
 }
 

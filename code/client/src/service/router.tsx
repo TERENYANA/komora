@@ -19,6 +19,10 @@ const router = createBrowserRouter([
                 path: 'contact',
                 element: <ContactPage />
             },
+            // {
+            //     path: 'product/:id',
+            //     element: <ProductDetailsPage />
+            // },
         ],
        
     },

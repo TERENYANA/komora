@@ -1,7 +1,7 @@
 /*
     promise - exécution d'un code asynchrome
 */
-import mysql, { Pool, PoolConnection } from "mysql2/promise";
+import  mysql, { type Pool, type PoolConnection } from "mysql2/promise";
 
 class MySQLService {
     //propiétté statique 

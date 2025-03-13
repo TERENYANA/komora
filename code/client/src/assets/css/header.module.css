@@ -4,11 +4,11 @@ utiliser en exclusivement des classes CSS
  */
 
  .site-header {
-    background-color:bisque;
+    background-color:rgba(255, 228, 196, 0.636);
     padding: 1rem;
  }
 
  .site-logo {
-    width: 3rem;
+    width: 8rem;
  }
 

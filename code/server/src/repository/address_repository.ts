@@ -1,5 +1,5 @@
 import MySQLService from "../service/mysql_service.js";
-import Address from "../model/Address.js";
+import type Address from "../model/Address.js";
 
 class AddressRepository {
     private table = "address";
@@ -25,7 +25,7 @@ class AddressRepository {
             return error;
 
         }
-        ;
+        
     };
 
     // récupérer les enregistrement selon une liste
@@ -55,7 +55,7 @@ class AddressRepository {
             return error;
 
         }
-        ;
+        
     };
 
 
@@ -82,13 +82,13 @@ class AddressRepository {
             const [results] = await connection.execute(sql, data);
 
             const result = (results as Address[]).shift();
-            return results;
+            return result;
             
         } catch (error) {
             return error;
 
         }
-        ;
+        
     };
 
 }

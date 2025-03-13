@@ -43,14 +43,12 @@ CREATE TABLE komora_dev.user(
     address VARCHAR(300) NOT NULL,
     city VARCHAR(50)  NOT NULL,
     role_id TINYINT UNSIGNED ,
-    address_id  TINYINT UNSIGNED ,
-    FOREIGN KEY(role_id) REFERENCES role(id),
-    FOREIGN KEY(address_id) REFERENCES address(id)
+    FOREIGN KEY(role_id) REFERENCES role(id)
 );
 
 CREATE TABLE komora_dev.user_address(
-address_id TINYINT UNSIGNED ,
 user_id TINYINT UNSIGNED,
+address_id TINYINT UNSIGNED ,
 FOREIGN KEY (address_id) REFERENCES address(id),
 FOREIGN KEY (user_id) REFERENCES user(id),
 -- clé primaire composite
@@ -86,9 +84,9 @@ CREATE TABLE komora_dev.order_detail(
     id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     quantity TINYINT NOT NULL,
     product_id TINYINT UNSIGNED,
-    order_id TINYINT UNSIGNED,
+    orders_id TINYINT UNSIGNED,
     FOREIGN KEY(product_id) REFERENCES product(id),
-    FOREIGN KEY(order_id) REFERENCES orders(id)
+    FOREIGN KEY(orders_id) REFERENCES orders(id)
 );
 
 -- créer des enregistrements
@@ -139,29 +137,30 @@ VALUES
 
 INSERT INTO komora_dev.user
 VALUES
-    (NULL, 'Roman', 'Kovalchuk', 'omniagapao@gmail.com', '12345678', '+353871096850', 'Liberty Square', 'Thurles', 1, 1 ),
-    (NULL, 'Yana', 'Yuskiv', 'jmniagapao47@gmail.com', '7676787', '+788776656577', 'Sun Square', 'Paris', 2, 1 ),
-    (NULL, 'Julia', 'Teren', 'jul@gmail.com','6776678877', '+8776545987', 'Candy Square', 'Paris', 2, 3 ),
-    (NULL, 'Andriy', 'Shevchenko', 'andriy.shev@gmail.com', 'password123', '+380671234567', 'Shevchenko Avenue', 'Kyiv', 1, 1),
-    (NULL, 'Elena', 'Morozova', 'elena.moroz@gmail.com', 'elena2024', '+74951234567', 'Red Square', 'Moscow', 2, 2),
-    (NULL, 'Lucas', 'Dubois', 'lucas.dubois@gmail.com', 'lucas@123', '+33611223344', 'Rue de Rivoli', 'Paris', 2, 1),
-    (NULL, 'Sophie', 'Martin', 'sophie.martin@gmail.com', 'sophie!321', '+33456789012', 'La Canebière', 'Marseille', 2, 4),
-    (NULL, 'Carlos', 'Garcia', 'carlos.garcia@gmail.com', 'carlos456', '+34678901234', 'Gran Via', 'Madrid', 2, 3),
-    (NULL, 'Maria', 'Fernandez', 'maria.fernandez@gmail.com', 'maria654', '+34987654321', 'Calle Mayor', 'Barcelona', 2, 5),
-    (NULL, 'Tom', 'Smith', 'tom.smith@gmail.com', 'tompassword', '+441234567890', 'Baker Street', 'London', 2, 2),
-    (NULL, 'Emily', 'Brown', 'emily.brown@gmail.com', 'emily789', '+447890123456', 'Oxford Street', 'London', 2, 5),
-    (NULL, 'David', 'Chen', 'david.chen@gmail.com', 'david1234', '+85212345678', 'Nathan Road', 'Hong Kong', 2, 4),
-    (NULL, 'Yuki', 'Tanaka', 'yuki.tanaka@gmail.com', 'yuki098', '+81312345678', 'Shibuya', 'Tokyo', 2, 1),
-    (NULL, 'Lina', 'Berg', 'lina.berg@gmail.com', 'lina!pass', '+49123456789', 'Alexanderplatz', 'Berlin', 2, 6)
+    (NULL, 'Roman', 'Kovalchuk', 'omniagapao@gmail.com', '12345678', '+353871096850', 'Liberty Square', 'Thurles', 1 ),
+    (NULL, 'Yana', 'Yuskiv', 'jmniagapao47@gmail.com', '7676787', '+788776656577', 'Sun Square', 'Paris', 2 ),
+    (NULL, 'Julia', 'Teren', 'jul@gmail.com','6776678877', '+8776545987', 'Candy Square', 'Paris', 2 ),
+    (NULL, 'Andriy', 'Shevchenko', 'andriy.shev@gmail.com', 'password123', '+380671234567', 'Shevchenko Avenue', 'Kyiv', 1),
+    (NULL, 'Elena', 'Morozova', 'elena.moroz@gmail.com', 'elena2024', '+74951234567', 'Red Square', 'Moscow', 2),
+    (NULL, 'Lucas', 'Dubois', 'lucas.dubois@gmail.com', 'lucas@123', '+33611223344', 'Rue de Rivoli', 'Paris', 2),
+    (NULL, 'Sophie', 'Martin', 'sophie.martin@gmail.com', 'sophie!321', '+33456789012', 'La Canebière', 'Marseille', 2),
+    (NULL, 'Carlos', 'Garcia', 'carlos.garcia@gmail.com', 'carlos456', '+34678901234', 'Gran Via', 'Madrid', 2),
+    (NULL, 'Maria', 'Fernandez', 'maria.fernandez@gmail.com', 'maria654', '+34987654321', 'Calle Mayor', 'Barcelona', 2),
+    (NULL, 'Tom', 'Smith', 'tom.smith@gmail.com', 'tompassword', '+441234567890', 'Baker Street', 'London', 2),
+    (NULL, 'Emily', 'Brown', 'emily.brown@gmail.com', 'emily789', '+447890123456', 'Oxford Street', 'London', 2),
+    (NULL, 'David', 'Chen', 'david.chen@gmail.com', 'david1234', '+85212345678', 'Nathan Road', 'Hong Kong', 2),
+    (NULL, 'Yuki', 'Tanaka', 'yuki.tanaka@gmail.com', 'yuki098', '+81312345678', 'Shibuya', 'Tokyo', 2),
+    (NULL, 'Lina', 'Berg', 'lina.berg@gmail.com', 'lina!pass', '+49123456789', 'Alexanderplatz', 'Berlin', 2)
  ;
 
 INSERT INTO komora_dev.user_address
 VALUES
-    (3,9),
-    (5,8),
-    (4,5),
-    (2,2),
-    (3,2)
+    (1,6),
+    (2,3),
+    (3,5),
+    (4,4),
+    (1,2),
+    (1,3)
 ;
 
 INSERT INTO komora_dev.orders
