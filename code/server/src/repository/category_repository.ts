@@ -17,24 +17,13 @@ class CategoryRepository {
              FROM
                 ${process.env.MYSQL_DATABASE}.${this.table};`
         //exécuter la requête 
-        // try / catch permet d'exécuter une instruction , si l'instruction a échoué , une error est récupérée
+        // try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
         try {
             //récupérer les résultat de la requète 
             //resultes represente le premier indice du du arrey 
             const [results] = await connection.execute(sql);
-
-            for (let i = 0; i < (results as Category[]).length; i++) {
-                const result = (results as Category[])[i];
-
-
-                result.category = (await new CategoryRepository().selectOne({
-                    id: result.parent_id,
-                })) as Category;
-
-            }
-            return results;
             //si la requête a réussie
-            
+            return results;
         } catch (error) {
             // si la requète a échoée
             return error;
@@ -59,13 +48,13 @@ class CategoryRepository {
         FROM
             ${process.env.MYSQL_DATABASE}.${this.table}
         WHERE 
-             ${this.table}.id = :id;
-        `
+             ${this.table}.id = :id;`
             ;
 
         //exécuter la requête  
         // try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
         try {
+
             //récupérer les résultat de la requète 
             //resultes represente le premier indice du du arrey 
             // requetes préparées 
@@ -73,14 +62,10 @@ class CategoryRepository {
             const [results] = await connection.execute(sql, data);
             //si la requête a réussie
             //récupérer le premier indice dan array
-            const result = (results as Category[]).shift() as Category;
-
-            result.category = (await new CategoryRepository().selectOne({
-                id: result.parent_id,
-            })) as Category;
+            const result = (results as Category[]).shift();
 
 
-            return results;
+            return result;
         } catch (error) {
             // si la requète a échoée
             return error;

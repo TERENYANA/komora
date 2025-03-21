@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "../../assets/css/nav.module.css";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import { UserContext } from "../provider/UserProvider";
 
 const Nav = () => {
 	// créer une référence :lien vers un élement HTML remplace l'utilisation de quiry Selector /qyuery selector All 
@@ -16,6 +17,10 @@ const Nav = () => {
 		// console.log(navMobileIsVisible);
 	};
 
+//récupérer l'utilisateur
+const{user,setUser} = useContext(UserContext);
+
+
 	// créer une référence : lien ver sun élément HTML remplace l'itilisation de querySelector / querySElector
 
 	// les balises a sont remplacées par le composant Link
@@ -24,6 +29,7 @@ const Nav = () => {
 
 	return (
 		<>
+		
 			{/* { attrobut ref permet de relier une référence à une balise HTML} */}
 			{/* le seule condition disponible dans HTML React : condition ternaire
     si une autre condition est à utiliser ,il est nécessaire de créer une fonctio externe  */}
@@ -34,6 +40,22 @@ const Nav = () => {
 			>
 				<Link to={"/"}>Home</Link>
 				<Link to={"/contact"}>Contact</Link>
+
+				{
+					user.role?.name === "admin" ? (<Link to={"/admin"}>Administration</Link>) : null
+				} 
+
+				{user.id ? (
+					<Link to={"/logout"}>Log Out</Link>
+				) : (
+						<>
+							<Link to={"/contact"}>Register</Link>
+							<Link to={"/contact"}>Login</Link>
+						</>
+				)
+					
+				
+				}
 			</nav>
 			{/* 
     ajouter des événements : 

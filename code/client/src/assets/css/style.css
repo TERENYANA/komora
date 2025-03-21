@@ -1,15 +1,25 @@
-/* 
-styles communs à toutes les  pages
-*/
+@import "tailwindcss";
 
-/*  
-reset CSS
-*/
-*{
-    box-sizing: border-box;
-
-}
-
-img {
-    width: 100%;
+:root {
+    --first-primary-light-color:#FBFAF1;
+    --second-primary-dark-color: #27292b;
+    --third-accent-color-light: #D0FF71;
+    --forth-accent-color: #000000;
+    --light-text-accent-color: #ffffffdb;}
+Kade Regular{
+font-family: "kade", sans-serif;
+font-weight: 400;
+font-style: normal;}
+Kade Regular Italic{
+font-family: "kade", sans-serif;
+font-weight: 400;
+font-style: italic;}
+Kade Bold{
+font-family: "kade", sans-serif;
+font-weight: 700;
+font-style: normal;}
+Kade Bold Italic{
+font-family: "kade", sans-serif;
+font-weight: 700;
+font-style: italic;
 }

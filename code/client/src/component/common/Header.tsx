@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 const Header = () => {
 	//en React , l'attribut class est remplacé par className
 	return (
-		<header className={styles["site-header"]}>
-			<div className={styles["site-logo"]}>
+		<header className={styles.header}>
+			<div >
 				{/* / pour cibler le dossier public */}
 				<Link to={"/"}>
-					<img src="/img/komora-logo-x-size.svg" alt="white logo" />
+					<img className={styles.logo} src="/img/komora-logo-x-size.svg" alt="white logo"/>
 				</Link>
 			</div>
-			<Nav />
+			<Nav/>
 		</header>
 	);
 };

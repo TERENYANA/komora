@@ -50,29 +50,31 @@ class UserController {
                 data: results
             })
         
-    }
-    public insert = async (req: Request, res: Response) => {
-		//créer tous les enregistrements
-		//req.body permet de récupérer de la requete HTTP
-		const results = await new UserRepository().insert(req.body);
-		//si la requet SQL renvoie une error
-		if (results instanceof Error) {
-			res.status(400).json({
-				status: 400,
-				message: process.env.NODE_ENV === "prod" ? "Error" : results,
-			});
-			// status: code de status HTTP
-			// json: formater une répons en JSON
-			return;
-		}
+	}
+	
+    // public insert = async (req: Request, res: Response) => {
+	// 	//créer tous les enregistrements
+	// 	//req.body permet de récupérer de la requete HTTP
+	// 	const results = await new UserRepository().insert(req.body);
+	// 	//si la requet SQL renvoie une error
+	// 	if (results instanceof Error) {
+	// 		res.status(400).json({
+	// 			status: 400,
+	// 			message: process.env.NODE_ENV === "prod" ? "Error" : results,
+	// 		});
+	// 		// status: code de status HTTP
+	// 		// json: formater une répons en JSON
+	// 		return;
+	// 	}
 
-		res.status(201).json({
-			status: 201,
-			message: "User created",
-			data: results,
-		});
-        return;
-	};
+	// 	res.status(201).json({
+	// 		status: 201,
+	// 		message: "User created",
+	// 		data: results,
+	// 	});
+    //     return;
+	// };
+
     public update = async (req: Request, res: Response) => {
 		//créer tous les enregistrements
 		//req.body permet de récupérer de la requete HTTP

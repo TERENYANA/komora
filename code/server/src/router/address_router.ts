@@ -9,8 +9,10 @@ class AddressRouter{
         this.router.get('/', new AddressController().index);
         // créer une variable de route ebn la préfixe d'un :
         this.router.get('/:id', new AddressController().one);
+        this.router.post('/', new AddressController().insert);
+        this.router.put('/', new AddressController().update);
+        this.router.delete('/', new AddressController().delete);
         return this.router;
     };
 }
-
 export default AddressRouter;

@@ -12,6 +12,7 @@ import OrderDetailRouter from "../router/order_detail_router.js";
 import ProductRouter from "../router/product_router.js";
 import UserRouter from "../router/user_router.js";
 import ContactRouter from "../router/contact_router.js";
+import SecurityRouter from "../router/security_router.js";
 class Server {
   //propriété
   private app: Express = express();
@@ -45,11 +46,12 @@ class Server {
     this.router.use("/brand", new BrandRouter().getRoutes());
     this.router.use("/category", new CategoryRouter().getRoutes());
     this.router.use("/order_detail", new OrderDetailRouter().getRoutes());
-    this.router.use("/order", new OrderRouter().getRoutes());
+    this.router.use("/orders", new OrderRouter().getRoutes());
     this.router.use("/product", new ProductRouter().getRoutes());
     // this.router.use("/order", new OrderDetailRouter().getRoutes());
     this.router.use("/user", new UserRouter().getRoutes());
     this.router.use("/contact", new ContactRouter().getRoutes());
+    this.router.use("/", new SecurityRouter().getRoutes());
 
     // si la route n'existe pas, à garder à la fin
     this.router.use("*", new NotFoundRouter().getRoutes());

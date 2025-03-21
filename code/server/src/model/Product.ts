@@ -3,9 +3,10 @@ import type Category from "./Category.js";
 
 type Product = {
     id: number;
+    name: string;
     description : string;
-    prise: number;
-    imageURL: number;
+    price: number;
+    imageURL: string;
     weight: number;
     stock: number;
     category_id: number;

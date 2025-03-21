@@ -82,6 +82,7 @@ class ProductRepository {
                 brand.id = ${this.table}.brand_id
               WHERE
                  ${this.table}.id = :id
+
               ;
                 `;
     //exécuter la requête

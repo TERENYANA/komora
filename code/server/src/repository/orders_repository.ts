@@ -24,28 +24,17 @@ class OrdersRepository {
             ;
             `;
 
-        try {
-
-            const [results] = await connection.execute(sql);
-
-            for (let i = 0; i < (results as Orders[]).length; i++) {
-                const result = (results as Orders[])[i];
-
-
-                result.user = (await new UserRepository().selectOne({
-                    id: result.user_id,
-                })) as User;
-
+            try {
+                //récupérer les résultat de la requète 
+                //resultes represente le premier indice du du arrey 
+                const [results] = await connection.execute(sql);
+                //si la requête a réussie
+                return results;
+            } catch (error) {
+                // si la requète a échoée
+                return error;
+    
             }
-
-            return results;
-
-
-        } catch (error) {
-
-            return error;
-
-        }
 
     };
 

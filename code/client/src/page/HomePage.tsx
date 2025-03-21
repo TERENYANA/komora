@@ -1,13 +1,16 @@
-import KomoraShop from "../component/home/KomoraShop";
-import DatePicker  from "../component/common/DatePicker";
+import Notice from "@/component/common/Notice";
+import HeroSection from "../component/client/HeroSection";
+
+
 const HomePage = () => {
 	//Fragment:balisee anonyme <></>
 	return (
-		<div className="container">
-			<h1>Komora Shop</h1>
-			<KomoraShop />
-			<DatePicker></DatePicker>
+	<main>
+			<div>
+				<Notice/>
+			<HeroSection/>
 		</div>
+	</main>
 	);
 };
 export default HomePage;

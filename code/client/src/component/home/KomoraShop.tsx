@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import CategoryAPI from "../../service/category_api";
 import type Category from "../../model/Category";
 
@@ -18,12 +17,13 @@ const KomoraShop = () => {
 	return (
 		<>
 			{categories.map((result) =>
-				result.parent_id === null ? (
+				result.name === null ? (
 					<p key={Math.random()}>{result.name}</p>
 				) : (
 					""
 				),
 			)}
+			
 		</>
 	);
 };

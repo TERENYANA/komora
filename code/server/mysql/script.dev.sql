@@ -1,208 +1,177 @@
 -- créer une base de données
 -- ATTENTION uniquement en dévelopment
 DROP DATABASE IF EXISTS komora_dev;
+
+-- créer une base de données
 CREATE DATABASE komora_dev;
+USE komora_dev;
 
 -- créer les tables
 -- commencer par les tables n'ayant pas de clés étrangères
 -- CREATE TABLE komora_dev;
 
-CREATE TABLE komora_dev.role(
-    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50)    
+-- Create tables (starting with no foreign keys)
+CREATE TABLE role (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL UNIQUE
 );
 
-
-
-CREATE TABLE komora_dev.brand(
-    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL
+CREATE TABLE brand (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE komora_dev.address(
-    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE address (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(300) NOT NULL 
 );
 
-CREATE TABLE komora_dev.category(
-    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL UNIQUE,
-    parent_id TINYINT UNSIGNED,
-    FOREIGN KEY (parent_id) REFERENCES category(id )
+CREATE TABLE category (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL UNIQUE
 );
 
-
-
-CREATE TABLE komora_dev.user(
-    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE user (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL UNIQUE,
-    password CHAR(60) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(250) NOT NULL,
     number VARCHAR(15) NOT NULL,
-    address VARCHAR(300) NOT NULL,
-    city VARCHAR(50)  NOT NULL,
-    role_id TINYINT UNSIGNED ,
-    FOREIGN KEY(role_id) REFERENCES role(id)
+    role_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES role(id)
 );
 
-CREATE TABLE komora_dev.user_address(
-user_id TINYINT UNSIGNED,
-address_id TINYINT UNSIGNED ,
-FOREIGN KEY (address_id) REFERENCES address(id),
-FOREIGN KEY (user_id) REFERENCES user(id),
--- clé primaire composite
-PRIMARY KEY (address_id, user_id)
+CREATE TABLE user_address (
+    user_id INT UNSIGNED,
+    address_id INT UNSIGNED,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (address_id) REFERENCES address(id),
+    PRIMARY KEY (user_id, address_id)
 );
 
-
-
-CREATE TABLE komora_dev.orders(
-    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    totalprice DECIMAL (10, 2) NOT NULL,
+CREATE TABLE orders (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    totalprice DECIMAL(10, 2) NOT NULL,
     date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    user_id  TINYINT UNSIGNED,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    user_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id) 
 );
 
-CREATE TABLE komora_dev.product(
-    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
+CREATE TABLE product (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(150) NOT NULL,
     description TEXT NOT NULL,
-    price DECIMAL(10,2) UNSIGNED NOT NULL,
-    imageURL VARCHAR (255) NOT NULL,
-    weight  DECIMAL(10,3) UNSIGNED,
-    stock INT UNSIGNED,
-    category_id TINYINT UNSIGNED,
-    brand_id TINYINT UNSIGNED,
-    FOREIGN KEY(category_id) REFERENCES category(id),
-    FOREIGN KEY(brand_id) REFERENCES brand(id)
+    price DECIMAL(10, 2) NOT NULL,
+    imageURL VARCHAR(255) NOT NULL,
+    weight DECIMAL(10, 3) UNSIGNED,
+    stock INT UNSIGNED DEFAULT 0,
+    category_id INT UNSIGNED NOT NULL,
+    brand_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES category(id),
+    FOREIGN KEY (brand_id) REFERENCES brand(id) 
 );
 
-
-CREATE TABLE komora_dev.order_detail(
-    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    quantity TINYINT NOT NULL,
-    product_id TINYINT UNSIGNED,
-    orders_id TINYINT UNSIGNED,
-    FOREIGN KEY(product_id) REFERENCES product(id),
-    FOREIGN KEY(orders_id) REFERENCES orders(id)
+CREATE TABLE order_detail (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    quantity TINYINT NOT NULL CHECK (quantity > 0),
+    product_id INT UNSIGNED,
+    orders_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES product(id),
+    FOREIGN KEY (orders_id) REFERENCES orders(id)
 );
 
--- créer des enregistrements
--- commencer par les tables n'ayant pas de clés etragères
--- pour la PK, utiliser NULL pour l'auto-incrémentation
-
-INSERT INTO komora_dev.role
+-- Insert data (starting with tables without foreign keys)
+INSERT INTO role
 VALUES
     (NULL, 'admin'),
-    (NULL, 'user')
-    ;
+    (NULL, 'user');
 
-INSERT INTO komora_dev.brand
+INSERT INTO brand
 VALUES
-    (NULL, 'Lays'),
-    (NULL, 'Cichorium'),
-    (NULL, 'Torchyn')
-    ;
+    (NULL, 'Komora Shop'),
+    (NULL, 'Galychyna'),
+    (NULL, 'Torchyn'),
+    (NULL, 'Hlibny Dar'),
+    (NULL, 'Slavutich');
 
-INSERT INTO komora_dev.address
+INSERT INTO address
 VALUES
-    (NULL, 'Freedom Square'),
-    (NULL, 'Funny Square'),
-    (NULL, 'Cold Square'),
-    (NULL, 'Main Street'),
-    (NULL, 'Garden Avenue'),
-    (NULL, 'Baker Street')
-;
+    (NULL, 'Abbey Street Lower, Dublin 1, Ireland'),
+    (NULL, 'Merrion Street Upper, Dublin 2, Ireland'),
+    (NULL, 'Mountjoy Square, Dublin 1, Ireland'),
+    (NULL, 'Grafton Street, Dublin 2, Ireland'),
+    (NULL, 'Leeson Street Upper, Dublin 4, Ireland');
 
-INSERT INTO komora_dev.category
+INSERT INTO category
 VALUES
-    (NULL, 'Products', NULL),
-    (NULL, 'Honey & Jam', NULL),
-    (NULL, 'Chocolate', NULL),
-    (NULL, 'Bakery', NULL),
-    (NULL, 'Daily', 1),
-    (NULL, 'Meat', 5),
-    (NULL, 'Fish', 5),
-    (NULL, 'Dairy', 1),
-    (NULL, 'Ethnic', 1),
-    (NULL, 'Cereals', 1),
-    (NULL, 'Fizzy drinks', 1),
-    (NULL, 'Alcohol', 1),
-    (NULL, 'Sweets', 1),
-    (NULL, 'Snacks', 1),
-    (NULL, 'Chemicals', 1)
-;
+    (NULL, 'Honey & Jam'),
+    (NULL, 'Bakery'),
+    (NULL, 'Groceries'),
+    (NULL, 'Dairy'),
+    (NULL, 'Ethnic'),
+    (NULL, 'Cereals'),
+    (NULL, 'Soft Drinks'),
+    (NULL, 'Snacks');
 
-INSERT INTO komora_dev.user
+INSERT INTO user
 VALUES
-    (NULL, 'Roman', 'Kovalchuk', 'omniagapao@gmail.com', '12345678', '+353871096850', 'Liberty Square', 'Thurles', 1 ),
-    (NULL, 'Yana', 'Yuskiv', 'jmniagapao47@gmail.com', '7676787', '+788776656577', 'Sun Square', 'Paris', 2 ),
-    (NULL, 'Julia', 'Teren', 'jul@gmail.com','6776678877', '+8776545987', 'Candy Square', 'Paris', 2 ),
-    (NULL, 'Andriy', 'Shevchenko', 'andriy.shev@gmail.com', 'password123', '+380671234567', 'Shevchenko Avenue', 'Kyiv', 1),
-    (NULL, 'Elena', 'Morozova', 'elena.moroz@gmail.com', 'elena2024', '+74951234567', 'Red Square', 'Moscow', 2),
-    (NULL, 'Lucas', 'Dubois', 'lucas.dubois@gmail.com', 'lucas@123', '+33611223344', 'Rue de Rivoli', 'Paris', 2),
-    (NULL, 'Sophie', 'Martin', 'sophie.martin@gmail.com', 'sophie!321', '+33456789012', 'La Canebière', 'Marseille', 2),
-    (NULL, 'Carlos', 'Garcia', 'carlos.garcia@gmail.com', 'carlos456', '+34678901234', 'Gran Via', 'Madrid', 2),
-    (NULL, 'Maria', 'Fernandez', 'maria.fernandez@gmail.com', 'maria654', '+34987654321', 'Calle Mayor', 'Barcelona', 2),
-    (NULL, 'Tom', 'Smith', 'tom.smith@gmail.com', 'tompassword', '+441234567890', 'Baker Street', 'London', 2),
-    (NULL, 'Emily', 'Brown', 'emily.brown@gmail.com', 'emily789', '+447890123456', 'Oxford Street', 'London', 2),
-    (NULL, 'David', 'Chen', 'david.chen@gmail.com', 'david1234', '+85212345678', 'Nathan Road', 'Hong Kong', 2),
-    (NULL, 'Yuki', 'Tanaka', 'yuki.tanaka@gmail.com', 'yuki098', '+81312345678', 'Shibuya', 'Tokyo', 2),
-    (NULL, 'Lina', 'Berg', 'lina.berg@gmail.com', 'lina!pass', '+49123456789', 'Alexanderplatz', 'Berlin', 2)
- ;
+    (NULL, 'Juliia', 'Terentiak', 'uterentiak@gmail.com', '$argon2i$v=19$m=16,t=2,p=1$Z21zaXVOQnFDWHBJV1lWMg$eI2exEPqicb8N2qFy4qCog', '+330751566772', 2),
+    (NULL, 'Yana', 'Yuskiv', 'yanayuskiv6447@gmail.com', '$argon2i$v=19$m=16,t=2,p=1$Z21zaXVOQnFDWHBJV1lWMg$omD5dfkMVcRU0vse/at0Kg', '+33780158257', 1), 
+    (NULL, 'Emma', 'Murphy', 'emma.murphy567@gmail.com', '$argon2i$v=19$m=16,t=2,p=1$Z21zaXVOQnFDWHBJV1lWMg$SikYy9Nd3QBAHGOLEaodqw', '+353852345678', 2),  
+    (NULL, 'Sean', 'Doyle', 'sean.doyle890@gmail.com', '$argon2i$v=19$m=16,t=2,p=1$Z21zaXVOQnFDWHBJV1lWMg$40vt6eL9LplLLRBPn8IFXQ', '+353861456789', 2);
 
-INSERT INTO komora_dev.user_address
+INSERT INTO user_address
 VALUES
-    (1,6),
-    (2,3),
-    (3,5),
-    (4,4),
-    (1,2),
-    (1,3)
-;
+    (1, 2),
+    (2, 3),
+    (3, 4),
+    (4, 1);
 
-INSERT INTO komora_dev.orders
+INSERT INTO orders
 VALUES
-    (NULL,49.99, '2024-10-30 14:20:00', 1),
-    (NULL,29.50, '2024-10-29 10:15:00', 2),
-    (NULL,75.20, '2024-10-28 18:30:00', 3),
-    (NULL,120.00, '2024-10-27 12:00:00', 4),
-    (NULL,15.99, '2024-10-26 09:45:00', 5),
-    (NULL,59.95, '2024-10-25 13:10:00', 6),
-    (NULL,23.75, '2024-10-24 11:25:00', 7),
-    (NULL,89.30, '2024-10-23 17:55:00', 8),
-    (NULL,150.00, '2024-10-22 15:40:00', 9),
-    (NULL,199.99, '2024-10-21 19:00:00', 10),
-    (NULL,45.60, '2024-10-20 08:05:00', 11)
-;
+    (NULL, 38.97, '2024-10-30 14:20:00', 1), 
+    (NULL, 28.98, '2024-10-29 10:15:00', 2), 
+    (NULL, 69.95, '2024-10-28 18:30:00', 3);
 
-INSERT INTO komora_dev.product
+INSERT INTO product
 VALUES
-    (NULL,'Chips Nature', 'Chips nature croustillantes', 1.50, 'https://example.com/chips.jpg', 0.15, 100, 1, 1),
-    (NULL,'Salade de Chicorée', 'Salade de chicorée fraîche', 2.99, 'https://example.com/chicoree.jpg', 0.50, 50, 2, 2),
-    (NULL,'Sauce Tomate', 'Sauce tomate épicée', 3.25, 'https://example.com/sauce_tomate.jpg', 0.30, 75, 3, 3),
-    (NULL,'Chips au Paprika', 'Chips croquantes au goût intense de paprika', 1.75, 'https://example.com/chips_paprika.jpg', 0.150, 120, 1, 1),
-    (NULL,'Chicorée Bio', 'Chicorée biologique pour les salades', 3.50, 'https://example.com/chicoree_bio.jpg', 0.40, 60, 2, 2),
-    (NULL,'Sauce Barbecue', 'Sauce barbecue fumée idéale pour les grillades', 2.99, 'https://example.com/sauce_bbq.jpg', 0.350, 80, 3, 3),
-    (NULL,'Chips Saveur Fromage', 'Chips croustillantes à la saveur intense de fromage', 1.85, 'https://example.com/chips_fromage.jpg', 0.15, 90, 1, 1),
-    (NULL,'Chicorée en Poudre', 'Chicorée en poudre pour boissons chaudes', 2.50, 'https://example.com/chicoree_poudre.jpg', 0.200, 100, 2, 2),
-    (NULL,'Ketchup Epicé', "Ketchup avec un mélange d\'épices piquantes", 2.75, 'https://example.com/ketchup_epice.jpg', 0.30, 150, 3, 3),
-    (NULL,'Chips Sel et Vinaigre', 'Chips au goût audacieux de sel et de vinaigre', 1.90, 'https://example.com/chips_sel_vinaigre.jpg', 0.15, 110, 1, 1),
-    (NULL,'Chicorée Rôtie', 'Chicorée rôtie pour une saveur plus intense', 3.20, 'https://example.com/chicoree_rotie.jpg', 0.25, 70, 2, 2)
-    ;
+    (NULL, 'Lipovyi Med - Linden Honey', 'Known for its light color and floral aroma, this honey is highly valued for its medicinal properties, especially for colds and sore throats.', 12.99, 'https://example.com/images/linden_honey.jpg', 0.500, 100, 1, 1),  
+    (NULL, 'Hirskyi Med - Carpathian Mountain Honey', 'Collected from wildflowers in the Carpathian Mountains, this honey has a rich and diverse taste, depending on the flowers available.', 14.49, 'https://example.com/images/carpathian_honey.jpg', 0.500, 80, 1, 1),  
+    (NULL, 'Hrechanyi Med - Buckwheat Honey', 'Dark and rich in flavor, this honey has strong antioxidant properties and a distinctive malty taste.', 13.99, 'https://example.com/images/buckwheat_honey.jpg', 0.500, 90, 1, 1),
+    (NULL, 'Pampushky', 'Soft, fluffy garlic bread rolls often served with borscht.', 3.99, 'images/pampushky.jpg', 0.250, 50, 2, 1),  
+    (NULL, 'Varenyky', 'Dumplings made with yeast or unleavened dough, filled with sweet or savory fillings.', 5.49, 'images/varenyky.jpg', 0.300, 100, 2, 1), 
+    (NULL, 'Blini', 'Thin pancakes served with sour cream, jam, or caviar.', 4.99, 'images/blini.jpg', 0.200, 80, 2, 1),
+    (NULL, 'Kovbasa', 'Traditional Ukrainian smoked sausage made from pork and spices.', 9.99, 'images/kovbasa.jpg', 0.500, 50, 3, 1),  
+    (NULL, 'Salo', 'Cured pork fat, often served with garlic and black bread.', 6.49, 'images/salo.jpg', 0.400, 70, 3, 1),  
+    (NULL, 'Pelmeni', 'Russian dumplings filled with minced meat, usually beef or pork.', 7.99, 'images/pelmeni.jpg', 0.500, 100, 3, 1), 
+    (NULL, 'Vobla', 'Dried and salted fish, a popular snack in Ukraine and Russia.', 5.99, 'images/vobla.jpg', 0.300, 50, 3, 1),  
+    (NULL, 'Forshmak', 'Traditional Jewish-Russian spread made from herring, apples, and onions.', 7.49, 'images/forshmak.jpg', 0.250, 40, 3, 1),  
+    (NULL, 'Ikra', 'Salted fish roe, often served as a delicacy with bread or blini.', 15.99, 'images/ikra.jpg', 0.200, 30, 3, 1), 
+    (NULL, 'Ryazhenka', 'A traditional Ukrainian fermented baked milk with a creamy, caramelized flavor.', 3.99, 'images/ryazhenka.jpg', 0.500, 50, 4, 2),  
+    (NULL, 'Kefir', 'A probiotic-rich fermented milk drink, popular in Eastern European cuisine.', 2.99, 'images/kefir.jpg', 1.000, 80, 4, 2),  
+    (NULL, 'Smetana', 'A thick, tangy sour cream used in soups, sauces, and desserts.', 4.49, 'images/smetana.jpg', 0.400, 60, 4, 2),  
+    (NULL, 'Tvorog', 'A fresh, crumbly farmer’s cheese commonly used in Slavic cuisine.', 5.99, 'images/tvorog.jpg', 0.500, 40, 4, 2),
+    (NULL, 'Adjika', 'A spicy Georgian sauce made from red peppers, garlic, and herbs, perfect for meat and vegetables.', 4.99, 'images/adjika.jpg', 0.250, 60, 5, 3),  
+    (NULL, 'Tkemali', 'A sour plum sauce from Georgia, used as a condiment for grilled meats and potatoes.', 5.49, 'images/tkemali.jpg', 0.300, 50, 5, 3),  
+    (NULL, 'Horseradish Sauce (Hren)', 'A strong and spicy condiment made from grated horseradish, popular in Slavic cuisine.', 3.99, 'images/hren.jpg', 0.200, 70, 5, 3), 
+    (NULL, 'Grechka (Buckwheat)', 'A nutritious, gluten-free cereal made from buckwheat, often enjoyed as a porridge or side dish.', 3.49, 'images/grechka.jpg', 0.400, 80, 6, 4),  
+    (NULL, 'Kasha', 'A traditional Eastern European dish made from buckwheat, usually served as a savory side or breakfast porridge.', 3.99, 'images/kasha.jpg', 0.500, 100, 6, 4),  
+    (NULL, 'Barley Groats', 'A wholesome cereal made from barley, perfect for hearty soups, stews, or as a nutritious side dish.', 2.99, 'images/barley_groats.jpg', 0.400, 90, 6, 4),
+    (NULL, 'Kvas', 'A traditional fermented Slavic beverage made from rye bread, slightly sweet with a tangy taste.', 2.49, 'images/kvas.jpg', 0.500, 120, 7, 5),  
+    (NULL, 'Kompot', 'A sweet fruit drink made by boiling fresh fruit, often served chilled as a refreshing beverage.', 3.49, 'images/kompot.jpg', 1.000, 90, 7, 5),  
+    (NULL, 'Tarhun', 'A popular Soviet-era green tarragon soda with a unique herbal flavor and sweetness.', 1.99, 'images/tarhun.jpg', 0.500, 150, 7, 5),  
+    (NULL, 'Sprite', 'A well-known lemon-lime soda, refreshing with a crisp and sweet flavor.', 1.29, 'images/sprite.jpg', 0.330, 200,7, 5),
+    (NULL, 'Sunflower Seeds', 'Roasted sunflower seeds, a crunchy and salty snack, perfect for munching on the go.', 1.99, 'images/sunflower_seeds.jpg', 0.150, 200, 8, 1),  
+    (NULL, 'Potato Chips', 'Crispy, thinly sliced potatoes fried to perfection with a salty flavor.', 2.49, 'images/potato_chips.jpg', 0.200, 150, 8, 1),  
+    (NULL, 'Puffed Corn', 'Light and crispy puffed corn snack, perfect for satisfying your snack cravings with a mild salty taste.', 2.79, 'images/puffed_corn.jpg', 0.250, 120, 8, 1),  
+    (NULL, 'Cheese Balls', 'Crunchy corn-based cheese-flavored snack, a popular treat for kids and adults alike.', 3.29, 'images/cheese_balls.jpg', 0.200, 180, 8, 2);
 
-INSERT INTO komora_dev.order_detail
+INSERT INTO order_detail
 VALUES
-    (NULL,5,1,1),
-    (NULL,7,9,2),
-    (NULL,5,1,3),
-    (NULL,13,4,1),
-    (NULL,9,1,5),
-    (NULL,3,8,1),
-    (NULL,5,7,6)
-;
+    (NULL, 3, 1, 1),
+    (NULL, 2, 2, 2), 
+    (NULL, 5, 3, 3);
 
 
 

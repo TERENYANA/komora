@@ -11,6 +11,7 @@ class RoleAPI{
     //envoyuer les résultats
     return response.json();
 };
+
 }
 
 export default RoleAPI;

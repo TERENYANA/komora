@@ -9,10 +9,7 @@ class UserRepository {
   private table = "user";
 
   public selectAll = async (): Promise<User[] | unknown> => {
-
-
     const connection = await new MySQLService().connect();
-
 
     const sql = `
             SELECT 
@@ -34,36 +31,29 @@ class UserRepository {
                 user_address.address_id =address.id
              GROUP BY 
                 ${this.table}.id
-            ;`
-      ;
-
-
+            ;`;
     try {
-
       const [results] = await connection.execute(sql);
       for (let i = 0; i < (results as User[]).length; i++) {
         const result = (results as User[])[i];
-
 
         result.role = (await new RoleRepository().selectOne({
           id: result.role_id,
         })) as Role;
 
-        result.addresses = (await new AddressRepository().selectInList(result.address_ids)) as Address[];
+        result.addresses = (await new AddressRepository().selectInList(
+          result.address_ids
+        )) as Address[];
       }
       return results;
     } catch (error) {
-
       return error;
-
     }
-
   };
 
   public selectOne = async (data: Partial<User>): Promise<User | unknown> => {
     //connexion au serveur MySQL
     //récupérer un enregistrement par sa clé primaire
-
 
     const connection = await new MySQLService().connect();
 
@@ -82,15 +72,11 @@ class UserRepository {
             ${process.env.MYSQL_DATABASE}.address
         ON
             user_address.address_id = address.id
-                WHERE 
+        WHERE 
              ${this.table}.id = :id
         GROUP BY 
             ${this.table}.id
-        ;`
-      ;
-
-
-
+        ;`;
     try {
       const [results] = await connection.execute(sql, data);
 
@@ -100,103 +86,45 @@ class UserRepository {
         id: result.role_id,
       })) as Role;
 
-      result.addresses = (await new AddressRepository().selectInList(result.address_ids)) as Address[];
-
+      result.addresses = (await new AddressRepository().selectInList(
+        result.address_ids
+      )) as Address[];
 
       return result;
-
     } catch (error) {
       return error;
-
     }
-
   };
 
-  public insert = async (
-    data: Partial<User>
-  ): Promise<User | unknown> => {
+  // choose one user by it's email
+  public selectOneByEmail = async (email: string) : Promise<User | unknown> => {
     //connexion au serveur MySQL
     //récupérer un enregistrement par sa clé primaire
 
     const connection = await new MySQLService().connect();
 
-    // roquête SQL
-    //ctéer une variable de requete SQL en préfixant le nom d'une variable par:
-
-    let sql = `
-        INSERT INTO
-         ${process.env.MYSQL_DATABASE}.${this.table}
-        VALUE 
-         ( 
-    NULL,
-    :firstname ,
-    :lastname ,
-    :email,
-    :password,
-    :number,
-    :address,
-    :city,
-    :role_id
-           )
-        ;
-        `
-      ;
-    //exécuter la requête
-    // try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
+    const sql = `
+        SELECT 
+            ${this.table}.*
+        FROM
+            ${process.env.MYSQL_DATABASE}.${this.table}
+        WHERE 
+             ${this.table}.email = :email
+        ;`;
     try {
+      const [results] = await connection.execute(sql, { email: email });
 
-      //créer une transaction SQL
-      connection.beginTransaction();
+      const result = (results as User[]).shift() as User;
 
-      //exécuter la premiere requête 
-      await connection.execute(sql, data);
 
-      //créer une variable SQL stockant le dernier identifiiant créer
-      sql = `
-           SET @id = LAST_INSERT_ID();
-          `;
 
-      await connection.execute(sql, data);
-      // deuxieme requete SQL de la transaction
-      ///1,2,3 >> (NULL,@id,1),(NULL,@id,2),(NULL,@id,3)
-      //split [1,2,3]
-      //join fait la chaine de caractere
-      const values = data.address_ids?.split(",").map(item => `(@id,${item})`).join(",");
-
-      sql = `
-        INSERT INTO
-         ${process.env.MYSQL_DATABASE}.user_address
-        VALUES
-         ${values}
-          ;
-         `;
-
-      //récupérer les résultat de la requète
-      //resultes represente le premier indice du du arrey
-      // requetes préparées
-      //data permet de définir une valeur aux variable de reequêtes SQL
-      const [results] = await connection.execute(sql, data);
-
-      //valider la transaction lorsque l'ensemble des requetes d'une transaction ont réussi
-      connection.commit();
-
-      //si la requête a réussie
-      //récupérer le premier indice dan array
-      return results;
+      return result;
     } catch (error) {
-
-      //annuler l'ensemble des requetes de la transaction si l'une des requetes a échoué
-      connection.rollback();
-
-
-      // si la requète a échoée
       return error;
     }
   };
 
-  public update = async (
-    data: Partial<User>
-  ): Promise<User | unknown> => {
+  public update = async (data: Partial<User>): Promise<User | unknown> => {
     //connexion au serveur MySQL
     //récupérer un enregistrement par sa clé primaire
 
@@ -214,41 +142,39 @@ class UserRepository {
     ${this.table}.email = :email,
     ${this.table}.password = :password,
     ${this.table}.number = :number,
-    ${this.table}.address = :address,
-    ${this.table}.city = :city,
     ${this.table}.role_id = :role_id
         WHERE
            ${this.table}.id = :id 
         ;
-        `
-    ;
+        `;
     //exécuter la requête
     // try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
 
     try {
+      //créer une transaction SQL
+      connection.beginTransaction();
 
-        //créer une transaction SQL
-        connection.beginTransaction();
+      //éxécuter la première roquete
+      await connection.execute(sql, data);
 
-        //éxécuter la première roquete
-        await connection.execute(sql, data);
-
-        //deuxième roquete 
-         sql = `
+      //deuxième roquete
+      sql = `
         DELETE FROM
          ${process.env.MYSQL_DATABASE}.user_address
         WHERE
            user_address.user_id = :id
         ;
-        `
-      ;
+        `;
       await connection.execute(sql, data);
 
       // deuxieme requete SQL de la transaction
       ///1,2,3 >> (NULL,@id,1),(NULL,@id,2),(NULL,@id,3)
       //split [1,2,3]
       //join fait la chaine de caractere
-      const values = data.address_ids?.split(",").map(item => `(:id,${item})`).join(",");
+      const values = data.address_ids
+        ?.split(",")
+        .map((item) => `(:id,${item})`)
+        .join(",");
 
       sql = `
         INSERT INTO
@@ -268,22 +194,18 @@ class UserRepository {
       connection.commit();
 
       //récupérer le premier indice dan array
-      
+
       return results;
     } catch (error) {
-
-          //annuler l'ensemble des requetes de la transaction si l'une des requetes a échoué
-          connection.rollback();
+      //annuler l'ensemble des requetes de la transaction si l'une des requetes a échoué
+      connection.rollback();
 
       // si la requète a échoée
       return error;
     }
   };
 
-
-  public delete = async (
-    data: Partial<User>
-  ): Promise<User | unknown> => {
+  public delete = async (data: Partial<User>): Promise<User | unknown> => {
     //connexion au serveur MySQL
     //récupérer un enregistrement par sa clé primaire
 
@@ -291,8 +213,6 @@ class UserRepository {
 
     // roquête SQL
     //ctéer une variable de requete SQL en préfixant le nom d'une variable par:
-
-    
 
     let sql = `
 
@@ -302,15 +222,12 @@ class UserRepository {
     WHERE
       user_address.user_id = :id 
     ;
-    `
-      ;
-
+    `;
     //exécuter la requête
     // try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
     try {
-
       connection.beginTransaction();
-    //executer la première roquète
+      //executer la première roquète
       await connection.execute(sql, data);
       sql = `
     DELETE FROM
@@ -318,10 +235,7 @@ class UserRepository {
     WHERE
        ${this.table}.id = :id 
     ;
-    `
-     ;
-
-
+    `;
 
       //récupérer les résultat de la requète
       //resultes represente le premier indice du du arrey
@@ -340,5 +254,6 @@ class UserRepository {
     }
   };
 }
+
 
 export default UserRepository;

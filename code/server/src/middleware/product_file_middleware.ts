@@ -44,17 +44,23 @@ class ProductFileMiddleware {
             }
         }
         else {
-            if (req.method === "PUT"){
-                req.body.imageURL=(product as Product ).imageURL;
+            if (req.method === "PUT") {
+                req.body.imageURL = (product as Product).imageURL;
             }
-// PUT > récupérer le nom de l'ancienne image et l'affecter à la propriété gérant le fichier
-//DELETE >suprime le fichier
+            // PUT > récupérer le nom de l'ancienne image et l'affecter à la propriété gérant le fichier
+            //DELETE >suprime le fichier
 
+            else if (req.method === 'DELETE') {
+                try {
+                    await fs.rm(`${process.env.ASSETS_DIR}/img/${(product as Product).imageURL}`);
+                } catch (err) {
+                    console.error("Error image", err);
+                }
+            }
 
         }
-        if (req.method === 'DELETE') {
-            await fs.rm(`${process.env.ASSETS_DIR}/img/${(product as Product).imageURL}`);
-        }
+
+        
 //DELETE > supprimer le fichier 
         next();
     };
