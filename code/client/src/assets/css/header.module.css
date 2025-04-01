@@ -1,14 +1,19 @@
-/*
-le suffixe module .css permet d'isoler les styles d'un composant
-utiliser en exclusivement des classes CSS 
- */
-
- .header {
-    background-color:rgba(255, 228, 196, 0.636);
-    padding: 1rem;
+.header {
+   background-color: rgba(255, 228, 196, 0);
+   padding: 1rem;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   z-index: 1000;
+   display: flex;
+   align-items: center;
+   height: 60px;
+   box-sizing: border-box;
  }
-
+ 
  .logo {
-    width: 9rem;
+   width: 9rem;
+   height: auto;
  }
 

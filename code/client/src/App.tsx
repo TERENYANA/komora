@@ -21,6 +21,5 @@ return(
 
 };
 // tout le provider sera geré par le router router
-
 export default App;
 

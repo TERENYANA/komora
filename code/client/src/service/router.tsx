@@ -11,6 +11,9 @@ import RegisterPage from "@/page/RegisterPage";
 import LoginPage from "@/page/LoginPage";
 import LogoutPage from "@/page/LogoutPage";
 import Guard from "@/component/common/Guard";
+import AdminLayout from "@/layout/AdminLayout";
+import AdminOrdersPage from "@/page/admin/AdminOrdersPage";
+import AdminUsersPage from "@/page/admin/AdminUsersPage";
 
 
 
@@ -59,7 +62,7 @@ const router = createBrowserRouter([
         path: '/admin/',
         //utilisation d'une mise en page
         element:
-            <Guard roles={['admin']}><BaseLayout/></Guard>,
+            <Guard roles={['admin']}><AdminLayout/></Guard>,
          //référencer les pages utilisant la mise en page
         children:[
             {
@@ -81,6 +84,14 @@ const router = createBrowserRouter([
             {
                 path: 'product/delete/:id',
                 element: <AdminProductDelatePage/>
+            },
+            {
+                path: 'orders',
+                element: <AdminOrdersPage />
+            },
+            {
+                path: 'users',
+                element: <AdminUsersPage />
             }
         ],
   

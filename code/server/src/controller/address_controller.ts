@@ -71,7 +71,7 @@ class AddressController {
 
 		res.status(201).json({
 			status: 201,
-			message: "Brand created",
+			message: "Address created",
 			data: results,
 		});
         return;

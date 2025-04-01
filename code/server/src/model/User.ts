@@ -17,6 +17,7 @@ type User = {
     //table de jointure: liste des identifiants concaténés > 2,4,7
     address_ids: string;
     addresses: Address[];
+    key:string;
     
 };
 export default User;

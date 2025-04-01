@@ -7,10 +7,8 @@ import Header from "../component/common/Header";
 import Footer from "../component/common/Footer";
 
 const BaseLayout = () => {
-return<>
-    <Header />
-    
-{/* Outlet permet de définir l'emplecement du contenu particuier d'une page */}
+    return <>
+<Header />
 <Outlet/>
 <Footer/>
 </>

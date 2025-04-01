@@ -17,8 +17,12 @@ class OrderDetailRepository {
         const sql = `
             SELECT 
                 ${this.table}.*
-             FROM
-                ${process.env.MYSQL_DATABASE}.${this.table};`
+            FROM
+                ${process.env.MYSQL_DATABASE}.${this.table}
+            LEFT JOIN 
+                ${process.env.MYSQL_DATABASE}.orders
+            ON
+                orders.id = ${this.table}.orders_id;`;
 
         try {
 
@@ -61,6 +65,10 @@ class OrderDetailRepository {
             ${this.table}.*
         FROM
             ${process.env.MYSQL_DATABASE}.${this.table}
+        LEFT JOIN 
+                ${process.env.MYSQL_DATABASE}.orders
+        ON
+                orders.id = ${this.table}.orders_id
         WHERE 
              ${this.table}.id = :id;`
             ;
@@ -71,7 +79,7 @@ class OrderDetailRepository {
             const [results] = await connection.execute(sql, data);
 
             const result = (results as Order_detail[]).shift();
-            return results;
+            return result;
 
         } catch (error) {
             return error;

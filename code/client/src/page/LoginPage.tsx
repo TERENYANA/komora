@@ -1,6 +1,4 @@
 import LoginForm from "@/component/client/LoginForm";
-
-
 const LoginPage = () => {
 	//Fragment:balisee anonyme <></>
 	return (

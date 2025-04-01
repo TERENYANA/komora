@@ -9,6 +9,7 @@ class SecurityRouter{
         // créer une variable de route ebn la préfixe d'un :
         this.router.post('/register', new SecurityController().register);
         this.router.post('/login', new SecurityController().login);
+        this.router.post('/auth', new SecurityController().auth);
         return this.router;
     };
 

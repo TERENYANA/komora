@@ -1,0 +1,27 @@
+:root {
+    --first-primary-light-color: #fbfaf1;
+    --second-primary-dark-color: #000000;
+    --third-accent-color-light: #d0ff71;
+    --forth-accent-color: #000000;
+    --light-text-accent-color: #ffffffdb;
+  }
+.body{
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color:var(--second-primary-dark-color);
+    color: var(--first-primary-light-color);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    line-height: 1.6rem;
+} 
+
+.main{
+    padding: min(30px,7%);
+}
+
+@media (max-width:800px){
+    .body{
+        grid-template-columns:1fr;
+    }
+   
+  }
