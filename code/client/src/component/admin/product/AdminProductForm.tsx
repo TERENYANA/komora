@@ -1,12 +1,16 @@
 import { useForm } from "react-hook-form";
 import type Product from "@/model/Product";
 import ProductAPI from "@/service/product_api";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import type Category from "@/model/Category";
 import CategoryAPI from "@/service/category_api";
 import { useNavigate, useParams } from "react-router-dom";
 import BrandAPI from "@/service/brand_api";
- import type Brand from "@/model/Brand";
+import type Brand from "@/model/Brand";
+import SecurityAPI from "@/service/security_api";
+import { UserContext } from "@/component/provider/UserProvider";
+
+
 
 const AdminProductForm = () => {
     // handleSubmit permet de gérer a soumission du formulaire
@@ -28,6 +32,8 @@ const AdminProductForm = () => {
     const { id } = useParams();
     console.log(id);
 
+    //récupérer l'utilisateur
+    const { user, setUser } = useContext(UserContext);
 
 
     useEffect(() => {
@@ -90,7 +96,16 @@ const AdminProductForm = () => {
         //     console.error('Error:', error);
         // }
 
-        const request = id ? await new ProductAPI().update(formData): await new ProductAPI().insert(formData);
+
+        //récupérer un token d'autorisation
+        const auth = await new SecurityAPI().auth(user);
+        // console.log(auth.data.token)
+
+
+
+        const request = id
+            ? await new ProductAPI().update(formData,auth.data.token)
+            : await new ProductAPI().insert(formData,auth.data.token);
 
         console.log(request);
         

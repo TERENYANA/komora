@@ -26,6 +26,7 @@ class ProductRouter {
 		this.router.put(
 			"/",
 			this.upload.any(),
+			new AutorizationMiddleware().check(["admin"]),
 			new ProductFileMiddleware().process,
 			new ProductController().update,
 		);

@@ -39,6 +39,28 @@ public login = async (data:Partial<User>) =>{
     //envoyuer les résultats
     return response.json();
 };
+
+//connecter un utilisateur
+public auth = async (data:Partial<User>) =>{
+
+    const request = new Request(`${import.meta.env.VITE_API_URL}/auth`,
+        {
+            method:"POST",
+            headers: {
+                "Content-Type" : 'application/json',
+            },
+            body:JSON.stringify(data),
+        }
+    );
+    //récupérer la réponse 
+    // exécuter la requête et récupérer la réponse JSON
+    const response = await fetch(request);
+    // const response = await request.json();
+    //envoyuer les résultats
+    return response.json();
+};
+
+
 }
 
 export default SecurityAPI;

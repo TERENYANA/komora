@@ -1,19 +1,207 @@
+/* Header.module.css */
 .header {
-   background-color: rgba(255, 228, 196, 0);
-   padding: 1rem;
-   position: fixed;
-   top: 0;
-   left: 0;
-   right: 0;
-   z-index: 1000;
-   display: flex;
-   align-items: center;
-   height: 60px;
-   box-sizing: border-box;
- }
- 
- .logo {
-   width: 9rem;
-   height: auto;
- }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
 
+.scrolled {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cartIcon, .accountIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.cartIcon:hover, .accountIcon:hover {
+  color: #666;
+}
+
+/* Burger Menu Styles */
+.burgerMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 110;
+}
+
+.burgerLine {
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+  transition: all 0.3s ease;
+}
+
+/* Transform burger into X when active */
+.burgerMenu.active .burgerLine:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.burgerMenu.active .burgerLine:nth-child(2) {
+  opacity: 0;
+}
+
+.burgerMenu.active .burgerLine:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Mobile Menu Styles */
+.mobileMenu {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 70px);
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  z-index: 99;
+}
+
+.mobileMenu.open {
+  transform: translateX(0);
+}
+
+.categoryList {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.categoryList li {
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Category button styling with animations */
+.categoryButton {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  padding: 10px 0;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover animation - slide in from left */
+.categoryButton::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.categoryButton:hover {
+  color: #000;
+  transform: translateX(8px);
+}
+
+.categoryButton:hover::before {
+  transform: translateX(0);
+}
+
+/* Alternative animation for even items - slide in from right */
+.categoryList li:nth-child(even) .categoryButton::before {
+  transform: translateX(100%);
+}
+
+/* Scale effect on hover */
+.categoryButton:active {
+  transform: scale(0.97);
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+  .header {
+    height: 80px;
+  }
+  
+  .scrolled {
+    height: 70px;
+  }
+  
+  .logo {
+    font-size: 28px;
+  }
+  
+  .logo img {
+    height: 50px;
+  }
+  
+  .mobileMenu {
+    top: 80px;
+    height: calc(100vh - 80px);
+  }
+  
+  .scrolled .mobileMenu {
+    top: 70px;
+    height: calc(100vh - 70px);
+  }
+
+  .categoryButton {
+    font-size: 22px;
+    padding: 12px 0;
+  }
+}

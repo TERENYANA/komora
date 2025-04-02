@@ -1,16 +1,20 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import type Product from "@/model/Product"
 import ProductAPI from "@/service/product_api";
 import { Link } from "react-router-dom";
 import  styles from "/app/src/assets/css/admin/adminproductlist.module.css";
 
+
 const AdminProductList = () => {
   //état pour stoquer des donées
   const [products, setProducts] = useState<Product[]>([]);
-  //récupérer des donées è l'affichage du composant 
 
+
+  //récupérer des donées è l'affichage du composant 
+  
+  
   useEffect(() => {
-    new ProductAPI().selectAll().then(response => setProducts(response.data))
+  new ProductAPI().selectAll().then(response => setProducts(response.data))
   }, []);
   
   return (
