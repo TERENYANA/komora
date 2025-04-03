@@ -1,17 +1,17 @@
-/* Header.module.css */
+/* Header.module.css - Version optimisée */
 .header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 70px;
+  height: 60px; /* Réduit pour mobile */
   background-color: transparent;
   transition: all 0.3s ease;
   z-index: 100;
 }
 
 .scrolled {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(251, 250, 241, 0.8); /* Format rgba plus lisible */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -22,28 +22,33 @@
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: 0 20px;
+  padding: 0 15px; /* Réduit pour mobile */
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  box-sizing: border-box; /* Garantit que padding est inclus dans width */
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 20px; /* Réduit pour mobile */
   font-weight: 700;
   color: #000;
   text-decoration: none;
   letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
 }
 
 .logo img {
-  height: 40px;
+  height: 32px; /* Réduit pour mobile */
   width: auto;
+  max-width: 100%; /* Empêche débordement */
 }
 
 .rightSection {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px; /* Réduit pour mobile */
 }
 
 .cartIcon, .accountIcon {
@@ -52,6 +57,8 @@
   justify-content: center;
   color: #333;
   transition: color 0.2s ease;
+  height: 24px; /* Taille fixe pour cohérence */
+  width: 24px;
 }
 
 .cartIcon:hover, .accountIcon:hover {
@@ -63,13 +70,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 30px;
-  height: 20px;
+  width: 24px; /* Plus petit pour mobile */
+  height: 18px;
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
   z-index: 110;
+  margin-left: 15px; /* Espace avec autres éléments */
 }
 
 .burgerLine {
@@ -80,8 +88,8 @@
 }
 
 /* Transform burger into X when active */
-.burgerMenu.active .burgerLine:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
+.burgerMenu.active .burgerLine:first-child {
+  transform: translateY(8px) rotate(45deg);
 }
 
 .burgerMenu.active .burgerLine:nth-child(2) {
@@ -89,23 +97,25 @@
 }
 
 .burgerMenu.active .burgerLine:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
+  transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Mobile Menu Styles */
 .mobileMenu {
   position: fixed;
-  top: 70px;
+  top: 60px; /* Correspond à la hauteur du header mobile */
   left: 0;
   width: 100%;
-  height: calc(100vh - 70px);
-  background-color: rgba(255, 255, 255, 0.95);
+  height: calc(100vh - 60px);
+  background-color: rgba(251, 250, 241, 0.8);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transform: translateX(100%);
   transition: transform 0.3s ease;
   overflow-y: auto;
   z-index: 99;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .mobileMenu.open {
@@ -116,28 +126,32 @@
   list-style: none;
   padding: 20px;
   margin: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .categoryList li {
   margin-bottom: 20px;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 /* Category button styling with animations */
 .categoryButton {
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 16px; /* Réduit pour mobile */
   font-weight: 500;
   color: #333;
-  padding: 10px 0;
+  padding: 8px 0;
   cursor: pointer;
   text-align: left;
   width: 100%;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  display: block;
 }
 
 /* Hover animation - slide in from left */
@@ -172,7 +186,21 @@
   transform: scale(0.97);
 }
 
-/* Media Queries */
+/* Media Queries - Plus détaillées pour meilleure responsivité */
+@media (min-width: 480px) {
+  .container {
+    padding: 0 20px;
+  }
+  
+  .logo img {
+    height: 36px;
+  }
+  
+  .categoryButton {
+    font-size: 18px;
+  }
+}
+
 @media (min-width: 768px) {
   .header {
     height: 80px;
@@ -183,11 +211,25 @@
   }
   
   .logo {
-    font-size: 28px;
+    font-size: 24px;
   }
   
   .logo img {
-    height: 50px;
+    height: 45px;
+  }
+  
+  .burgerMenu {
+    width: 28px;
+    height: 20px;
+  }
+  
+  .rightSection {
+    gap: 20px;
+  }
+  
+  .cartIcon, .accountIcon {
+    height: 28px;
+    width: 28px;
   }
   
   .mobileMenu {
@@ -201,7 +243,34 @@
   }
 
   .categoryButton {
+    font-size: 20px;
+    padding: 10px 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 30px;
+  }
+  
+  .logo {
+    font-size: 28px;
+  }
+  
+  .logo img {
+    height: 50px;
+  }
+  
+  .categoryButton {
     font-size: 22px;
     padding: 12px 0;
+  }
+  
+  .burgerMenu.active .burgerLine:first-child {
+    transform: translateY(9px) rotate(45deg);
+  }
+  
+  .burgerMenu.active .burgerLine:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
   }
 }

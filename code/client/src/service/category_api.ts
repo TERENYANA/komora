@@ -12,6 +12,18 @@ class CategoryAPI{
     //envoyuer les résultats
     return response.json();
 };
+
+public selectOne = async (id:number) =>{
+    
+    const request = new Request(`${import.meta.env.VITE_API_URL}/${this.route}/${id}`);
+    //récupérer la réponse 
+    // exécuter la requête et récupérer la réponse JSON
+    const response = await fetch(request);
+    // const response = await request.json();
+    //envoyuer les résultats
+    return response.json();
+};
+
 }
 
 export default CategoryAPI;

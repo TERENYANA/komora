@@ -14,6 +14,7 @@ import Guard from "@/component/common/Guard";
 import AdminLayout from "@/layout/AdminLayout";
 import AdminOrdersPage from "@/page/admin/AdminOrdersPage";
 import AdminUsersPage from "@/page/admin/AdminUsersPage";
+import CatalogtPage from "@/page/CatalogPage";
 
 
 
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
             {
                 path: 'logout',
                 element: <LogoutPage/>
+            },
+            {
+                path: 'catalog/:category?',
+                element: <CatalogtPage/>
             }
 
             // {

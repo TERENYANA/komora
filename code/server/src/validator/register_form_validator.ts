@@ -1,7 +1,5 @@
 import Joi from "joi";
-import User from "../model/User.js";
-
-
+import type User from "../model/User.js";
 class RegisterFormValidator {
     // un validateur envoie la validation de votre saisie
     // values(peu import le nom) représente la saisie du formulaire
@@ -12,7 +10,7 @@ class RegisterFormValidator {
             lastname: Joi.string().required(),
             email: Joi.string().email().required(),
             password: Joi.string().required(),
-            number: Joi.number().required(),
+            number: Joi.string().required(),
             address:Joi.string().required()
         });
 

@@ -8,7 +8,7 @@ type User = {
     lastname: string;
     email: string;
     password: string;
-    number: number;
+    number: string;
     address: string;
     role_id: number;
     role: Role;

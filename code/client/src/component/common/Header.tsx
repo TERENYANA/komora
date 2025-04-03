@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { ShoppingCart, User } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "/app/src/assets/css/header.module.css";
-
+import CategoryAPI from "@/service/category_api";
 
 type Category = {
   id: number;
@@ -14,39 +13,35 @@ interface HeaderProps {
   onCategorySelect?: (category: Category) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ logo = 'Komora Shop', onCategorySelect }) => {
+const Header: React.FC<HeaderProps> = ({onCategorySelect }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<number | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  useEffect(() => {
+    new CategoryAPI().selectAll().then(response => setCategories(response.data));
+  }, []);
 
   useEffect(() => {
-    // Fetch categories from your SQL database
-    // This is a placeholder - replace with your actual API call
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('/api/categories');
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-        // Provide some fallback categories for testing
-        setCategories([
-          { id: 1, name: 'Clothing' },
-          { id: 2, name: 'Accessories' },
-          { id: 3, name: 'Home Decor' },
-          { id: 4, name: 'Electronics' },
-        ]);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+    // Extract category from URL if present
+    const searchParams = new URLSearchParams(location.search);
+    const categoryParam = searchParams.get('category');
+    
+    if (categoryParam) {
+      setActiveCategory(Number(categoryParam));
+    } else {
+      setActiveCategory(null);
+    }
+  }, [location]);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-
+    
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -60,9 +55,21 @@ const Header: React.FC<HeaderProps> = ({ logo = 'Komora Shop', onCategorySelect 
   };
 
   const handleCategoryClick = (category: Category) => {
+    setActiveCategory(category.id);
+    
     if (onCategorySelect) {
       onCategorySelect(category);
     }
+    
+    navigate(`/catalog/?category=${category.id}`);
+    setIsMenuOpen(false);
+    document.body.style.overflow = 'auto';
+  };
+
+  // Fonction modifiée pour gérer le clic sur "All Products"
+  const handleAllProductsClick = () => {
+    setActiveCategory(null);
+    navigate('/catalog');
     setIsMenuOpen(false);
     document.body.style.overflow = 'auto';
   };
@@ -71,42 +78,54 @@ const Header: React.FC<HeaderProps> = ({ logo = 'Komora Shop', onCategorySelect 
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
         <Link to="/" className={styles.logo}>
-         <img src="/public/img/komora-logo-x-size [Recovered].svg" alt="Komora shop logo" />
+          <img src="/public/img/komora-logo-x-size [Recovered].svg" alt="Komora shop logo" />
         </Link>
         
         <div className={styles.rightSection}>
           <Link to="/cart" className={styles.cartIcon}>
-           <img width="35" height="35" src="/public/img/shooping-icon-komora.svg" alt="" />
+            <img width="35" height="35" src="/public/img/shooping-icon-komora.svg" alt="Shopping cart" />
           </Link>
           
-          <Link to={"/login"} className={styles.accountIcon}>
-            <img width="35" height="35" src="/public/img/account-icon-komora.svg" alt="" />
+          <Link to="/login" className={styles.accountIcon}>
+            <img width="35" height="35" src="/public/img/account-icon-komora.svg" alt="Account" />
           </Link>
           
-          <button 
+          <button type="button"
             className={`${styles.burgerMenu} ${isMenuOpen ? styles.active : ''}`}
             onClick={toggleMenu}
             aria-label="Toggle menu"
             aria-expanded={isMenuOpen}
           >
-            <span className={styles.burgerLine}></span>
-            <span className={styles.burgerLine}></span>
-            <span className={styles.burgerLine}></span>
+            <span className={styles.burgerLine}/>
+            <span className={styles.burgerLine}/>
+            <span className={styles.burgerLine}/>
           </button>
         </div>
       </div>
       
-      {/* Mobile menu */}
+      {/* Mobile menu with underline animation */}
       <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ''}`}>
         <nav>
           <ul className={styles.categoryList}>
+            <li>
+              <button 
+                type="button"
+                onClick={handleAllProductsClick}
+                className={`${styles.categoryButton} ${activeCategory === null ? styles.active : ''}`}
+              >
+                All Products
+                <span className={styles.underline}/>
+              </button>
+            </li>
             {categories.map((category) => (
               <li key={category.id}>
                 <button 
+                  type="button"
                   onClick={() => handleCategoryClick(category)}
-                  className={styles.categoryButton}
+                  className={`${styles.categoryButton} ${activeCategory === category.id ? styles.active : ''}`}
                 >
                   {category.name}
+                  <span className={styles.underline}/>
                 </button>
               </li>
             ))}
