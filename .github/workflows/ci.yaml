@@ -28,18 +28,18 @@ jobs:
       -
         name: Compile client TypeScript files
         run: |
-             cd code/client
-             npm run build
+            cd code/client
+            npm run build
       -
-        name: Compile client TypeScript files
+        name: Install test database
         run: |
-              sudo service mysql start
-              cd code/server/mysql
-              mysql -uroot -pKOMORA150813072002  -e 'SOURCE script.test.sql;'
-              mysql -uroot -pKOMORA150813072002  -e 'SHOW BATABASES;'
+            sudo service mysql start
+            cd code/server/mysql
+            mysql -uroot -pKOMORA150813072002  -e 'SOURCE script.test.sql;'
+            mysql -uroot -pKOMORA150813072002  -e 'SHOW BATABASES;'
       -
         name: Execute tests
         run: |
-              cd code/server
-              npm run test
+            cd code/server
+            npm run test
     
