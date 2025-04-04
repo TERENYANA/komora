@@ -1,5 +1,5 @@
 import { UserContext } from "@/component/provider/UserProvider";
-import User from "@/model/User";
+import type User from "@/model/User";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
