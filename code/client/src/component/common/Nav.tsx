@@ -18,7 +18,7 @@ const Nav = () => {
 	};
 
 //récupérer l'utilisateur
-const{user,setUser} = useContext(UserContext);
+const{user} = useContext(UserContext);
 
 
 	// créer une référence : lien ver sun élément HTML remplace l'itilisation de querySelector / querySElector

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import type Product from "@/model/Product"
 import ProductAPI from "@/service/product_api";
 import { Link } from "react-router-dom";

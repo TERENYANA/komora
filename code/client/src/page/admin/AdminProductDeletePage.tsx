@@ -9,14 +9,14 @@ const AdminProductDelatePage=()=>{
     const {id} = useParams();
     //navigation
     const navigate = useNavigate();
-    const { user, setUser } = useContext(UserContext);
+    const { user} = useContext(UserContext);
 
     useEffect(() =>{ 
         //créer le formData
         const formData = new FormData();
         formData.append("id", id as unknown as string);
         new SecurityAPI().auth(user).then((authReponse)=> {
-            new ProductAPI().delete(formData,authReponse.data.token).then((response)=>{
+            new ProductAPI().delete(formData,authReponse.data.token).then(()=>{
                 navigate('/admin/product');
             });
         });

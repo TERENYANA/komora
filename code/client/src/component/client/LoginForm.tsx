@@ -18,7 +18,7 @@ const LoginForm = () => {
   } = useForm<User>();
 
   const [message, setMessage] = useState<string>();
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const onSubmit = async (values: User) => {
     try {

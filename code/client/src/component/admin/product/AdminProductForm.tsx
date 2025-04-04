@@ -33,7 +33,7 @@ const AdminProductForm = () => {
     console.log(id);
 
     //récupérer l'utilisateur
-    const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
 
     useEffect(() => {
