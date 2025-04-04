@@ -1,6 +1,6 @@
-import type Address from "./Address.ts";
-import type Orders from "./Orders.ts";
-import type Role from "./Role.ts";
+import type Address from "./Address.js";
+import type Orders from "./Orders.js";
+import type Role from "./Role.js";
 
 type User = {
     id: number;

@@ -1,6 +1,6 @@
 
-import type Product from "./Product.ts"
-import type Orders from "./Orders.ts"
+import type Product from "./Product.js"
+import type Orders from "./Orders.js"
 
 type Order_detail = {
     id: number;
