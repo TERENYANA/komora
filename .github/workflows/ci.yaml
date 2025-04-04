@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - 
-        name: Clone github reoisitory
+        name: Clone github reposisitory
         uses: actions/checkout@v4
       - 
         name: Install server dependencies
@@ -16,12 +16,12 @@ jobs:
             cd code/server
             npm ci
       -
-        name: Install server dependencies
+        name: Install client dependencies
         run: |
             cd code/client
             npm ci
       - 
-        name: Install server dependencies
+        name: Compile server TypeScript files
         run: |
             cd code/server
             npm run compile
