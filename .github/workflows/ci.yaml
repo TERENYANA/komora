@@ -7,12 +7,9 @@ jobs:
   Execute_my_CI:
     runs-on: ubuntu-latest
     steps:
-      - name: Execute commands
-        run: |
-          ls
-          mkdir test
-          cd test
-          touch index.html
+      - 
+        name: Clone github reoisitory
+        uses: actions/checkout@v4
 
-          
+
     
