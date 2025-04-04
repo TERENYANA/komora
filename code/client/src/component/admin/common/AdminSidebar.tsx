@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import styles from "/app/src/assets/css/admin/sidebar.module.css";
+import styles from "../../../assets/css/admin/sidebar.module.css";
 import {
   IoStorefrontOutline,
   IoPrismOutline,

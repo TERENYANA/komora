@@ -6,7 +6,7 @@ import SecurityAPI from "@/service/security_api";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "../provider/UserProvider";
-import styles from "/app/src/assets/css/user/loginform.module.css";
+import styles from "../../assets/css/user/loginform.module.css";
 
 const LoginForm = () => {
   const navigate = useNavigate();

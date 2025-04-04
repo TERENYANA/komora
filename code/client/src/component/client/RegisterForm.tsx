@@ -3,7 +3,7 @@ import type User from "@/model/User";
 import { useNavigate } from "react-router-dom";
 import SecurityAPI from "@/service/security_api";
 import { useState } from "react";
-import styles from "/app/src/assets/css/user/registerform.module.css"; 
+import styles from "../../css/user/registerform.module.css"; 
 
 const RegisterForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<User>();
