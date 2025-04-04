@@ -7,11 +7,14 @@ jobs:
   Execute_my_CI:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone github repository
+      - 
+        name: Clone github reoisitory
         uses: actions/checkout@v4
-      - name: Install server dependencies
+      - 
+        name: Install server dependencies
         run: |
-          cd code/server
-          npm ci
+            cd code/server
+            npm ci
+
 
     
