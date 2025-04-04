@@ -1,6 +1,8 @@
 import type Address from "./Address.js";
 import type Orders from "./Orders.js";
 import type Role from "./Role.js";
+
+
 type User = {
     id: number;
     firstname: string;
