@@ -1,5 +1,5 @@
-import type Brand from "./Brand.js";
-import type Category from "./Category.js";
+import type Brand from "./Brand.ts";
+import type Category from "./Category.ts";
 
 type Product = {
     id: number;

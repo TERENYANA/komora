@@ -1,5 +1,5 @@
 import type Address from "./Address.js";
-import type User from "./User.ts";
+import type User from "./Role.js";
 
 type User_address = {
     address_id: number;
