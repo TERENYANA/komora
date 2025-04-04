@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "/app/src/assets/css/header.module.css";
 import CategoryAPI from "@/service/category_api";
 
@@ -19,23 +19,12 @@ const Header: React.FC<HeaderProps> = ({onCategorySelect }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
   const navigate = useNavigate();
-  const location = useLocation();
   
   useEffect(() => {
     new CategoryAPI().selectAll().then(response => setCategories(response.data));
   }, []);
 
-  useEffect(() => {
-    // Extract category from URL if present
-    const searchParams = new URLSearchParams(location.search);
-    const categoryParam = searchParams.get('category');
-    
-    if (categoryParam) {
-      setActiveCategory(Number(categoryParam));
-    } else {
-      setActiveCategory(null);
-    }
-  }, [location]);
+ 
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,7 +39,6 @@ const Header: React.FC<HeaderProps> = ({onCategorySelect }) => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    // Prevent scrolling when menu is open
     document.body.style.overflow = isMenuOpen ? 'auto' : 'hidden';
   };
 
@@ -66,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({onCategorySelect }) => {
     document.body.style.overflow = 'auto';
   };
 
-  // Fonction modifiée pour gérer le clic sur "All Products"
+
   const handleAllProductsClick = () => {
     setActiveCategory(null);
     navigate('/catalog');
@@ -103,7 +91,7 @@ const Header: React.FC<HeaderProps> = ({onCategorySelect }) => {
         </div>
       </div>
       
-      {/* Mobile menu with underline animation */}
+      {/* Underline animation */}
       <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ''}`}>
         <nav>
           <ul className={styles.categoryList}>

@@ -16,6 +16,7 @@ class ProductRouter {
 		this.router.get("/", new ProductController().index);
 		// créer une variable de route ebn la préfixe d'un :
 		this.router.get("/:id", new ProductController().one);
+		this.router.get("/category/:id", new ProductController().selectByCategory);
 		this.router.post(
 			"/",
 			this.upload.any(),

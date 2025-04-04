@@ -46,6 +46,28 @@ import ProductRepository from "../repository/product_repository.js";class Produc
 		});
 	};
 
+	public selectByCategory = async (req: Request, res: Response) => {
+		//récupérer tous les enregistrements
+		const results = await new ProductRepository().selectByCategory(req.params);
+		//si la requet SQL renvoie une error
+		if (results instanceof Error) {
+			res.status(400).json({
+				status: 400,
+				message: process.env.NODE_ENV === "prod" ? "Error" : results,
+			});
+			// status: code de status HTTP
+			// json: formater une répons en JSON
+			return;
+		}
+
+		res.status(200).json({
+			status: 200,
+			message: "Ok",
+			data: results,
+		});
+        return;
+	};
+
 	public insert = async (req: Request, res: Response) => {
 		//créer tous les enregistrements
 		//req.body permet de récupérer de la requete HTTP

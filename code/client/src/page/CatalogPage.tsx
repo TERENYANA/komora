@@ -4,16 +4,16 @@ import { useEffect, useState } from "react";
 import styles from "../assets/css/user/catalog.module.css";
 import type Product from "@/model/Product";
 import ProductAPI from "@/service/product_api";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Catalog = () => {
 	const [products, setProducts] = useState<Product[]>([]);
 
-	// const {id} = useParams();
+	const {id} = useParams();
 
 	useEffect(() => {
-		new ProductAPI().selectAll().then((response) => setProducts(response.data));
-	}, []);
+		new ProductAPI().selectByCategory(id as unknown as number).then((response) => setProducts(response.data));
+	}, [id]);
 
 	return (
 		<div className={styles.catalogContainer}>

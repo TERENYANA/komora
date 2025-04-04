@@ -47,7 +47,7 @@ const router = createBrowserRouter([
                 element: <LogoutPage/>
             },
             {
-                path: 'catalog/:category?',
+                path: 'catalog/:id?',
                 element: <CatalogtPage/>
             }
 
