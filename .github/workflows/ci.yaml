@@ -35,8 +35,8 @@ jobs:
         run: |
           sudo service mysql start
           cd code/server/mysql
-          mysql -uroot -pKOMORA150813072002 -e 'SOURCE script.test.sql;'
-          mysql -uroot -pKOMORA150813072002 -e 'SHOW DATABASES;'
+          mysql -uroot -proot -e 'SOURCE script.test.sql;'
+          mysql -uroot -proot -e 'SHOW DATABASES;'
       
       - name: Execute tests
         run: |
