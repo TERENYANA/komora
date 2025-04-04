@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 const Catalog = () => {
 	const [products, setProducts] = useState<Product[]>([]);
 
-	const { id } = useParams();
+	const {id} = useParams();
 
 	useEffect(() => {
 		new ProductAPI().selectAll().then((response) => setProducts(response.data));
@@ -20,7 +20,7 @@ const Catalog = () => {
 			<div className={styles.catalogGrid}>
 				{products.map((product) => {
 					return (
-						<div key={Math.random()} className={styles.productCard}>
+						<div key={product.id} className={styles.productCard}>
 							<div className={styles.imageContainer}>
 								<img
 									src={`${import.meta.env.VITE_API_URL}/img/${product.imageURL}`}

@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({onCategorySelect }) => {
       onCategorySelect(category);
     }
     
-    navigate(`/catalog/?category=${category.id}`);
+    navigate(`/catalog/${category.id}`);
     setIsMenuOpen(false);
     document.body.style.overflow = 'auto';
   };
