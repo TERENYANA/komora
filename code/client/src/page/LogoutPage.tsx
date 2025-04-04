@@ -13,9 +13,6 @@ const LogoutPage = () => {
         setUser({} as User);
         navigate("/");
     }, [setUser, navigate]);
-
-
-
     return <>
     </>
 };
