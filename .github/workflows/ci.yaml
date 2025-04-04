@@ -40,6 +40,6 @@ jobs:
       -
         name: Execute tests
         run: |
-            cd code/server
-            npm run test
+              cd code/server
+              npm run test
     
