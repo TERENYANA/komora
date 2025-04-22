@@ -131,7 +131,7 @@ class BrandRepository {
           // si la requète a échoée
           return error;
         }
-      };
+    };
     public update = async (
         data: Partial<Brand>
       ): Promise<Brand | unknown> => {
@@ -168,7 +168,7 @@ class BrandRepository {
           // si la requète a échoée
           return error;
         }
-      };
+    };
     public delete = async (
         data: Partial<Brand>
       ): Promise<Brand | unknown> => {
@@ -203,9 +203,7 @@ class BrandRepository {
           // si la requète a échoée
           return error;
         }
-      };
-    
-
+    };
 }
 
 export default BrandRepository;

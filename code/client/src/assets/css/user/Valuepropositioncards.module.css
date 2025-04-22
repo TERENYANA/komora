@@ -1,0 +1,166 @@
+
+
+.section {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  width: 100%;
+  padding: 5rem 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row; /* Always display in row */
+  justify-content: space-between; /* Space evenly between cards */
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+    background-color: rgba(251, 250, 241, 0.8); /* Format rgba plus lisible */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.4s ease-out;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  overflow: hidden;
+  border: 1px solid rgba(236, 236, 241, 0.8);
+  backdrop-filter: blur(10px);
+  flex: 1; /* Make all cards take equal width */
+  min-width: 0; /* Allow cards to shrink below content size if needed */
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(236, 236, 241, 0.8), transparent);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.iconContainer {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.iconContainer::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: white;
+  z-index: -1;
+}
+
+.icon {
+  font-size: 1.75rem;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
+}
+
+.content {
+  text-align: center;
+  flex: 1;
+  width: 100%;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin: 0;
+  margin-bottom: 1rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.description {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Responsive adjustments - stack on small screens but keep row on larger screens */
+@media (max-width: 767px) {
+  .container {
+    flex-direction: column;
+  }
+  
+  .card {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 6rem 2rem;
+  }
+  
+  .container {
+    gap: 2rem;
+  }
+  
+  .card {
+    padding: 2.5rem 2rem;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

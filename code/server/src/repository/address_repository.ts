@@ -1,17 +1,14 @@
 import MySQLService from "../service/mysql_service.js";
 import type Address from "../model/Address.js";
-
 class AddressRepository {
   private table = "address";
   public selectAll = async (): Promise<Address[] | unknown> => {
     const connection = await new MySQLService().connect();
-
     const sql = `
             SELECT 
                 ${this.table}.*
-             FROM
+            FROM
                 ${process.env.MYSQL_DATABASE}.${this.table};`;
-
     try {
       const [results] = await connection.execute(sql);
 

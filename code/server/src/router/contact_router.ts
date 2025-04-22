@@ -7,7 +7,8 @@ class ContactRouter{
     //méthode
     public getRoutes = () => {
         this.router.get('/', new ContactController().index);
-       
+        this.router.get('/:_id', new ContactController().one);
+        this.router.post("/", new ContactController().insert);
         return this.router;
     };
 }

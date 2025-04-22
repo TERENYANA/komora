@@ -29,7 +29,7 @@
 
 .imageContainer {
   position: relative;
-  height: 200px;
+  height: 300px;
   overflow: hidden;
 }
 
@@ -74,7 +74,6 @@
   font-weight: 500;
 }
 
-/* Media queries for responsiveness */
 @media (max-width: 1200px) {
   .catalogContainer {
     padding: 120px 15px 20px;
@@ -84,7 +83,7 @@
 @media (max-width: 1024px) {
   .catalogGrid {
     grid-template-columns: repeat(3, 1fr);
-    padding: 0 10px; /* Ajuster l'espace latéral */
+    padding: 0 10px; 
   }
 }
 
@@ -105,7 +104,7 @@
   }
   
   .imageContainer {
-    height: 250px;
+    height: 300px;
   }
   
   .catalogContainer {

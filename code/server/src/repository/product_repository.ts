@@ -11,9 +11,7 @@ class ProductRepository {
 		//connexion au serveur MySQL
 
 		//récupérer un enregistrement par sa clé primaire
-
 		const connection = await new MySQLService().connect();
-
 		// roquête SQL
 		const sql = `
             SELECT 
@@ -54,7 +52,6 @@ class ProductRepository {
 			return error;
 		}
 	};
-
 	public selectOne = async (
 		data: Partial<Product>,
 	): Promise<Product | unknown> => {
@@ -101,7 +98,6 @@ class ProductRepository {
 			return error;
 		}
 	};
-
 	public selectByCategory = async (
 		data: Partial<Category>,
 	): Promise<Category | unknown> => {
@@ -127,7 +123,6 @@ class ProductRepository {
                 brand.id = ${this.table}.brand_id
             WHERE
               ${this.table}.category_id=:id
-          
             ;`;
 		//exécuter la requête
 		// try / catch permet d'exécuter une instruction , si l'instruction échoue , une error est récupéree
@@ -160,12 +155,9 @@ class ProductRepository {
 	): Promise<Product | unknown> => {
 		//connexion au serveur MySQL
 		//récupérer un enregistrement par sa clé primaire
-
 		const connection = await new MySQLService().connect();
-
 		// roquête SQL
 		//ctéer une variable de requete SQL en préfixant le nom d'une variable par:
-
 		const sql = `
     INSERT INTO
      ${process.env.MYSQL_DATABASE}.${this.table}
@@ -199,7 +191,6 @@ class ProductRepository {
 			return error;
 		}
 	};
-
 	public update = async (
 		data: Partial<Product>,
 	): Promise<Product | unknown> => {
@@ -243,7 +234,6 @@ class ProductRepository {
 			return error;
 		}
 	};
-
 	public delete = async (
 		data: Partial<Product>,
 	): Promise<Product | unknown> => {
@@ -279,5 +269,4 @@ class ProductRepository {
 		}
 	};
 }
-
 export default ProductRepository;

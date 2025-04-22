@@ -3,7 +3,7 @@ import type User from "./User.js";
 
 type User_address = {
     address_id: number;
-    adress: Address;
+    address: Address;
     user_id: number;
     user: User;
 };

@@ -13,9 +13,14 @@ import LogoutPage from "@/page/LogoutPage";
 import Guard from "@/component/common/Guard";
 import AdminLayout from "@/layout/AdminLayout";
 import AdminOrdersPage from "@/page/admin/AdminOrdersPage";
-import AdminUsersPage from "@/page/admin/AdminUsersPage";
-import CatalogtPage from "@/page/CatalogPage";
-
+import AdminUsersPage from "@/page/admin/AdminUserPage";
+import ClientHomePage from "@/page/client/ClientHomePage";
+import AdminSendEmailPage from "@/page/admin/AdminSendEmailPage";
+import CatalogPage from "@/page/CatalogPage";
+import CatalogAllPage from "@/page/client/CatalogAllPage";
+import TermsAndConditionsPage from "@/page/client/TermsAndConditionsPage";
+import PrivacyPolicyPage from "@/page/client/PrivacyPolicyPage";
+import FaqPage from "@/component/client/FaqPage";
 
 
 const router = createBrowserRouter([
@@ -48,9 +53,24 @@ const router = createBrowserRouter([
             },
             {
                 path: 'catalog/:id?',
-                element: <CatalogtPage/>
+                element: <CatalogPage/>
+            },
+            {
+                path: 'catalogall',
+                element: <CatalogAllPage/>
+            },
+            {
+                path: 'termsandconditions',
+                element: <TermsAndConditionsPage/>
+            },
+            {
+                path: 'privacypolicy',
+                element: <PrivacyPolicyPage/>
+            },
+            {
+                path: 'faq',
+                element: <FaqPage/>
             }
-
             // {
             //     path: 'product/:id',
             //     element: <ProductDetailsPage />
@@ -95,11 +115,28 @@ const router = createBrowserRouter([
                 element: <AdminOrdersPage />
             },
             {
-                path: 'users',
+                path: 'user',
                 element: <AdminUsersPage />
+            },
+            {
+                path: 'SendEmail/:_id?',
+                element: <AdminSendEmailPage />
             }
         ],
-  
+    },
+    {
+        //préfixe de toutes des URL enfents 
+        path: '/user/',
+        //utilisation d'une mise en page
+        element:
+            <Guard roles={['user']}><BaseLayout/></Guard>,
+         //référencer les pages utilisant la mise en page
+        children:[
+            {
+                path: '',
+                element: <ClientHomePage/>
+            }
+        ],
     },
 ]);
 export default router;

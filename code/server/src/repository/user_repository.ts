@@ -9,7 +9,10 @@ class UserRepository {
   private table = "user";
 
   public selectAll = async (): Promise<User[] | unknown> => {
+
+
     const connection = await new MySQLService().connect();
+
 
     const sql = `
             SELECT 
@@ -17,7 +20,7 @@ class UserRepository {
                 GROUP_CONCAT(address.id) AS address_ids
              FROM
                 ${process.env.MYSQL_DATABASE}.${this.table}
-              LEFT JOIN
+             JOIN
                 ${process.env.MYSQL_DATABASE}.role
              ON
                 role.id = ${this.table}.role_id
@@ -28,7 +31,7 @@ class UserRepository {
              LEFT JOIN
                 ${process.env.MYSQL_DATABASE}.address
              ON
-                user_address.address_id =address.id
+                user_address.address_id=address.id
              GROUP BY 
                 ${this.table}.id
             ;`;

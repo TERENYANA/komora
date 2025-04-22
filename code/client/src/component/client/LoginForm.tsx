@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "../provider/UserProvider";
 import styles from "../../assets/css/user/loginform.module.css";
-
 const LoginForm = () => {
   const navigate = useNavigate();
   const { 
@@ -16,23 +15,19 @@ const LoginForm = () => {
     setError,
     formState: { errors } 
   } = useForm<User>();
-
   const [message, setMessage] = useState<string>();
   const { setUser } = useContext(UserContext);
-
   const onSubmit = async (values: User) => {
     try {
       const request = await new SecurityAPI().login(values);
-      
       if ([200, 201].includes(request.status)) {
         setUser(request.data);
-        
         switch(request.data.role.name) {
           case "admin":
             navigate("/admin");
             break;
           case "user":
-            navigate("/register");
+            navigate("/user");
             break;
           default:
             navigate("/");
@@ -53,7 +48,6 @@ const LoginForm = () => {
       console.error(error);
     }
   };
-
   return (
     <div className={styles.loginContainer}>
       <div className={styles.loginWrapper}>
@@ -64,9 +58,7 @@ const LoginForm = () => {
             {message}
           </div>
         )}
-
         <Notice />
-        
         <form 
           className={styles.form} 
           onSubmit={handleSubmit(onSubmit)}
@@ -97,7 +89,6 @@ const LoginForm = () => {
               </p>
             )}
           </div>
-
           <div className={styles.formGroup}>
             <label 
               htmlFor="password" 
@@ -124,7 +115,6 @@ const LoginForm = () => {
               </p>
             )}
           </div>
-
           <div className={styles.captchaGroup}>
             <img 
               src="/src/assets/img/captcha.png" 
@@ -141,7 +131,6 @@ const LoginForm = () => {
               aria-label="Captcha"
             />
           </div>
-
           <div className={styles.buttonGroup}>
             <button
               type="submit"
@@ -151,7 +140,6 @@ const LoginForm = () => {
             </button>
           </div>
         </form>
-        
         <div className={styles.registerLink}>
           Don't have an account? <Link to="/register">Register</Link>
         </div>
@@ -159,5 +147,4 @@ const LoginForm = () => {
     </div>
   );
 };
-
 export default LoginForm;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../../assets/css/header.module.css";
 import CategoryAPI from "@/service/category_api";
@@ -18,6 +18,8 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect }) => {
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [activeCategory, setActiveCategory] = useState<number | null>(null);
+	const menuRef = useRef<HTMLDivElement>(null);
+	const burgerRef = useRef<HTMLButtonElement>(null);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -30,12 +32,38 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect }) => {
 		const handleScroll = () => {
 			setIsScrolled(window.scrollY > 10);
 		};
-
 		window.addEventListener("scroll", handleScroll);
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
+
+	useEffect(() => {
+		// Function to handle clicks outside the menu
+		const handleClickOutside = (event: MouseEvent) => {
+			// Check if menu is open and click is outside menu and not on the burger button
+			if (
+				isMenuOpen && 
+				menuRef.current && 
+				!menuRef.current.contains(event.target as Node) && 
+				burgerRef.current && 
+				!burgerRef.current.contains(event.target as Node)
+			) {
+				setIsMenuOpen(false);
+				document.body.style.overflow = "auto";
+			}
+		};
+
+		// Add event listener when menu is open
+		if (isMenuOpen) {
+			document.addEventListener("mousedown", handleClickOutside);
+		}
+
+		// Clean up the event listener
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [isMenuOpen]);
 
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
@@ -44,11 +72,9 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect }) => {
 
 	const handleCategoryClick = (category: Category) => {
 		setActiveCategory(category.id);
-
 		if (onCategorySelect) {
 			onCategorySelect(category);
 		}
-
 		navigate(`/catalog/${category.id}`);
 		setIsMenuOpen(false);
 		document.body.style.overflow = "auto";
@@ -56,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect }) => {
 
 	const handleAllProductsClick = () => {
 		setActiveCategory(null);
-		navigate("/catalog");
+		navigate("/catalogall");
 		setIsMenuOpen(false);
 		document.body.style.overflow = "auto";
 	};
@@ -91,6 +117,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect }) => {
 					</Link>
 
 					<button
+						ref={burgerRef}
 						type="button"
 						className={`${styles.burgerMenu} ${isMenuOpen ? styles.active : ""}`}
 						onClick={toggleMenu}
@@ -105,14 +132,19 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect }) => {
 			</div>
 
 			{/* Underline animation */}
-			<div className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ""}`}>
+			<div 
+				ref={menuRef}
+				className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ""}`}
+			>
 				<nav>
 					<ul className={styles.categoryList}>
 						<li>
 							<button
 								type="button"
 								onClick={handleAllProductsClick}
-								className={`${styles.categoryButton} ${activeCategory === null ? styles.active : ""}`}
+								className={`${styles.categoryButton} ${
+									activeCategory === null ? styles.active : ""
+								}`}
 							>
 								All Products
 								<span className={styles.underline} />
@@ -123,7 +155,9 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect }) => {
 								<button
 									type="button"
 									onClick={() => handleCategoryClick(category)}
-									className={`${styles.categoryButton} ${activeCategory === category.id ? styles.active : ""}`}
+									className={`${styles.categoryButton} ${
+										activeCategory === category.id ? styles.active : ""
+									}`}
 								>
 									{category.name}
 									<span className={styles.underline} />
@@ -136,5 +170,4 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect }) => {
 		</header>
 	);
 };
-
 export default Header;

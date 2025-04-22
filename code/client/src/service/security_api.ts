@@ -2,7 +2,7 @@ import type User from "@/model/User";
 class SecurityAPI{
     // récupération de tous les enregistrements$
     //import.meta.env permet d'acceder aux variable d'environement
-   public register = async (data:Partial<User>) =>{
+public register = async (data:Partial<User>) =>{
 
     const request = new Request(`${import.meta.env.VITE_API_URL}/register`,
         {
@@ -20,7 +20,6 @@ class SecurityAPI{
     //envoyuer les résultats
     return response.json();
 };
-
 public login = async (data:Partial<User>) =>{
 
     const request = new Request(`${import.meta.env.VITE_API_URL}/login`,
@@ -39,7 +38,6 @@ public login = async (data:Partial<User>) =>{
     //envoyuer les résultats
     return response.json();
 };
-
 //connecter un utilisateur
 public auth = async (data:Partial<User>) =>{
 
@@ -59,8 +57,6 @@ public auth = async (data:Partial<User>) =>{
     //envoyuer les résultats
     return response.json();
 };
-
-
 }
 
 export default SecurityAPI;

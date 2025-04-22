@@ -1,22 +1,20 @@
--- créer une base de données
--- ATTENTION uniquement en dévelopment
 DROP DATABASE IF EXISTS komora_dev;
-
 -- créer une base de données
 CREATE DATABASE komora_dev;
 USE komora_dev;
-
 -- créer les tables
 -- commencer par les tables n'ayant pas de clés étrangères
 -- CREATE TABLE komora_dev;
-
 -- Create tables (starting with no foreign keys)
 CREATE TABLE role (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL UNIQUE
 );
-
 CREATE TABLE brand (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+CREATE TABLE category (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL UNIQUE
 );
@@ -24,11 +22,6 @@ CREATE TABLE brand (
 CREATE TABLE address (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(300) NOT NULL 
-);
-
-CREATE TABLE category (
-    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE user (
@@ -71,7 +64,6 @@ CREATE TABLE product (
     FOREIGN KEY (category_id) REFERENCES category(id),
     FOREIGN KEY (brand_id) REFERENCES brand(id) 
 );
-
 CREATE TABLE order_detail (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     quantity TINYINT NOT NULL CHECK (quantity > 0),
@@ -80,7 +72,6 @@ CREATE TABLE order_detail (
     FOREIGN KEY (product_id) REFERENCES product(id),
     FOREIGN KEY (orders_id) REFERENCES orders(id)
 );
-
 -- Insert data (starting with tables without foreign keys)
 INSERT INTO role
 VALUES
@@ -136,20 +127,20 @@ VALUES
 
 INSERT INTO product
 VALUES
-    (NULL, 'Lipovyi Med - Linden Honey', 'Known for its light color and floral aroma, this honey is highly valued for its medicinal properties, especially for colds and sore throats.', 12.99, 'https://example.com/images/linden_honey.jpg', 0.500, 100, 1, 1),  
-    (NULL, 'Hirskyi Med - Carpathian Mountain Honey', 'Collected from wildflowers in the Carpathian Mountains, this honey has a rich and diverse taste, depending on the flowers available.', 14.49, 'https://example.com/images/carpathian_honey.jpg', 0.500, 80, 1, 1),  
-    (NULL, 'Hrechanyi Med - Buckwheat Honey', 'Dark and rich in flavor, this honey has strong antioxidant properties and a distinctive malty taste.', 13.99, 'https://example.com/images/buckwheat_honey.jpg', 0.500, 90, 1, 1),
-    (NULL, 'Pampushky', 'Soft, fluffy garlic bread rolls often served with borscht.', 3.99, 'images/pampushky.jpg', 0.250, 50, 2, 1),  
-    (NULL, 'Varenyky', 'Dumplings made with yeast or unleavened dough, filled with sweet or savory fillings.', 5.49, 'images/varenyky.jpg', 0.300, 100, 2, 1), 
+    (NULL, 'Lipovyi Med - Linden Honey', 'Known for its light color and floral aroma, this honey is highly valued for its medicinal properties, especially for colds and sore throats.', 12.99, 'LipovuiMed.png', 0.500, 100, 1, 1),  
+    (NULL, 'Hirskyi Med - Carpathian Mountain Honey', 'Collected from wildflowers in the Carpathian Mountains, this honey has a rich and diverse taste, depending on the flowers available.', 14.49, 'HirskyiMed.png', 0.500, 80, 1, 1),  
+    (NULL, 'Hrechanyi Med - Buckwheat Honey', 'Dark and rich in flavor, this honey has strong antioxidant properties and a distinctive malty taste.', 13.99, 'HrechanyiMed.png  ', 0.500, 90, 1, 1),
+    (NULL, 'Pampushky', 'Soft, fluffy garlic bread rolls often served with borscht.', 3.99, 'Pampushky.png', 0.250, 50, 2, 1),  
+    (NULL, 'Varenyky', 'Dumplings made with yeast or unleavened dough, filled with sweet or savory fillings.', 5.49, 'Varenyky.png', 0.300, 100, 2, 1), 
     (NULL, 'Blini', 'Thin pancakes served with sour cream, jam, or caviar.', 4.99, 'images/blini.jpg', 0.200, 80, 2, 1),
-    (NULL, 'Kovbasa', 'Traditional Ukrainian smoked sausage made from pork and spices.', 9.99, 'images/kovbasa.jpg', 0.500, 50, 3, 1),  
-    (NULL, 'Salo', 'Cured pork fat, often served with garlic and black bread.', 6.49, 'images/salo.jpg', 0.400, 70, 3, 1),  
-    (NULL, 'Pelmeni', 'Russian dumplings filled with minced meat, usually beef or pork.', 7.99, 'images/pelmeni.jpg', 0.500, 100, 3, 1), 
-    (NULL, 'Vobla', 'Dried and salted fish, a popular snack in Ukraine and Russia.', 5.99, 'images/vobla.jpg', 0.300, 50, 3, 1),  
-    (NULL, 'Forshmak', 'Traditional Jewish-Russian spread made from herring, apples, and onions.', 7.49, 'images/forshmak.jpg', 0.250, 40, 3, 1),  
-    (NULL, 'Ikra', 'Salted fish roe, often served as a delicacy with bread or blini.', 15.99, 'images/ikra.jpg', 0.200, 30, 3, 1), 
-    (NULL, 'Ryazhenka', 'A traditional Ukrainian fermented baked milk with a creamy, caramelized flavor.', 3.99, 'images/ryazhenka.jpg', 0.500, 50, 4, 2),  
-    (NULL, 'Kefir', 'A probiotic-rich fermented milk drink, popular in Eastern European cuisine.', 2.99, 'images/kefir.jpg', 1.000, 80, 4, 2),  
+    (NULL, 'Kovbasa', 'Traditional Ukrainian smoked sausage made from pork and spices.', 9.99, 'Kovbasa.png', 0.500, 50, 3, 1),  
+    (NULL, 'Salo', 'Cured pork fat, often served with garlic and black bread.', 6.49, 'Salo.png', 0.400, 70, 3, 1),  
+    (NULL, 'Pelmeni', 'Russian dumplings filled with minced meat, usually beef or pork.', 7.99, 'Pelmeni.png', 0.500, 100, 3, 1), 
+    (NULL, 'Vobla', 'Dried and salted fish, a popular snack in Ukraine and Russia.', 5.99, 'Vobla.png', 0.300, 50, 3, 1),  
+    (NULL, 'Forshmak', 'Traditional Jewish-Russian spread made from herring, apples, and onions.', 7.49, 'Forshmak.png', 0.250, 40, 3, 1),  
+    (NULL, 'Ikra', 'Salted fish roe, often served as a delicacy with bread or blini.', 15.99, 'Ikra.png ', 0.200, 30, 3, 1), 
+    (NULL, 'Ryazhenka', 'A traditional Ukrainian fermented baked milk with a creamy, caramelized flavor.', 3.99, 'Ryazhenka.png', 0.500, 50, 4, 2),  
+    (NULL, 'Kefir', 'A probiotic-rich fermented milk drink, popular in Eastern European cuisine.', 2.99, 'Kefir.png', 1.000, 80, 4, 2),  
     (NULL, 'Smetana', 'A thick, tangy sour cream used in soups, sauces, and desserts.', 4.49, 'images/smetana.jpg', 0.400, 60, 4, 2),  
     (NULL, 'Tvorog', 'A fresh, crumbly farmer’s cheese commonly used in Slavic cuisine.', 5.99, 'images/tvorog.jpg', 0.500, 40, 4, 2),
     (NULL, 'Adjika', 'A spicy Georgian sauce made from red peppers, garlic, and herbs, perfect for meat and vegetables.', 4.99, 'images/adjika.jpg', 0.250, 60, 5, 3),  

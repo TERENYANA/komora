@@ -1,5 +1,4 @@
-import type User from "./User";
-
+import type User from "./User.js";
 type Orders = {
     id: number;
     totalprice: number;

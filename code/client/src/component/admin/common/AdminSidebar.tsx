@@ -67,11 +67,11 @@ const AdminSidebar = () => {
         </li>
         <li className={styles.menuItem}>
           <Link
-            to="users"
-            className={`${styles.menuLink} ${isActive('users') ? styles.activeLink : ''}`}
+            to="user"
+            className={`${styles.menuLink} ${isActive('user') ? styles.activeLink : ''}`}
           >
             <IoPeopleOutline
-              className={`${styles.menuIcon} ${isActive('users') ? styles.activeIcon : ''}`}
+              className={`${styles.menuIcon} ${isActive('user') ? styles.activeIcon : ''}`}
             />
             <span>Users</span>
           </Link>

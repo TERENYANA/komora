@@ -11,31 +11,22 @@
 -- jointure : sélectionner des données présentes dans pleusieurs tables en utilisant 
 
 SELECT
-    user.id,
-    user.firstname,
-    user.lastname,
-    orders.totalprice,
-    orders.date,
-    GROUP_CONCAT(address.name) AS adresses
+    u.id,
+    u.firstname,
+    u.lastname,
+    o.date,
+    GROUP_CONCAT(a.name SEPARATOR ', ') AS addresses
 FROM
-   komora_dev.user
+    komora_dev.user u
 JOIN  
-    komora_dev.orders
-ON 
-    orders.client_id=client.id
+    komora_dev.orders o ON o.user_id = u.id
 JOIN
-    komora_dev.address
+    komora_dev.user_address ua ON ua.user_id = u.id
 JOIN
-    komora_dev.user_address
-ON
-    user_address.client_id=user.id
-AND   
-    user_address.address_id=address.id   
+    komora_dev.address a ON a.id = ua.address_id
 GROUP BY
-    user.id,
-    user.firstname,
-    user.lastname,
-    order.totalprice,
-    order.date
-;
-  
+    u.id,
+    u.firstname,
+    u.lastname,
+    o.date;
+

@@ -2,8 +2,8 @@ import type Address from "./Address.js";
 import type Orders from "./Orders.js";
 import type Role from "./Role.js";
 
-
 type User = {
+    user: User;
     id: number;
     firstname: string;
     lastname: string;
@@ -19,6 +19,5 @@ type User = {
     address_ids: string;
     addresses: Address[];
     key:string;
-    
 };
 export default User;

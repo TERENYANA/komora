@@ -1,0 +1,123 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #FBFAF1 0%, #F5F576 100%);
+    padding: 1rem;
+    padding-top: 6rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2A2F1B;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+  
+  .section {
+    background: rgba(251, 250, 241, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    border: 1px solid rgba(251, 250, 241, 0.3);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+  
+  .section:hover {
+    background: rgba(251, 250, 241, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .subtitle {
+    color: #2A2F1B;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .subtitle::before {
+    content: "";
+    display: inline-block;
+    width: 0.5rem;
+    height: 1.5rem;
+    background: linear-gradient(90deg, #D0FF71 0%, #F5F576 100%);
+    margin-right: 0.75rem;
+    border-radius: 0.25rem;
+  }
+  
+  .text {
+    color: #2A2F1B;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .container {
+      padding-top: 4rem;
+    }
+    
+    .section {
+      padding: 1.5rem;
+    }
+    
+    .title {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+    
+    .subtitle {
+      font-size: 1.25rem;
+    }
+    
+    .text {
+      font-size: 0.925rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      padding-top: 3rem;
+    }
+    
+    .section {
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-height: 667px) {
+    .container {
+      min-height: unset;
+      padding-top: 5rem;
+      padding-bottom: 1.5rem;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .section {
+      transition: none;
+    }
+  }

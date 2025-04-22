@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #FBFAF1 0%, #F5F576 100%);
+    padding: 1rem;
+    padding-top: 6rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+  }

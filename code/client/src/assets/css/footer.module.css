@@ -1,0 +1,100 @@
+/* Footer.module.css */
+
+.footer {
+    background-color: #FBFAF1;
+    padding: 1.5rem 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .navigation {
+    flex: 1;
+  }
+  
+  .navLinks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  
+  .navItem {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navLink {
+    text-decoration: none;
+    color: #000;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  
+  .navLink:hover {
+    color: #555;
+  }
+  
+  .socialLinks {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  
+  .socialLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    transition: color 0.2s ease;
+  }
+  
+  .socialLink:hover {
+    color: #555;
+  }
+  
+  .socialIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .navLinks {
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .socialLinks {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .navLinks {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .navItem {
+      margin-bottom: 0.5rem;
+    }
+  }

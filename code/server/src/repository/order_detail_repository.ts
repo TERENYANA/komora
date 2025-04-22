@@ -20,6 +20,10 @@ class OrderDetailRepository {
             FROM
                 ${process.env.MYSQL_DATABASE}.${this.table}
             LEFT JOIN 
+                ${process.env.MYSQL_DATABASE}.product
+            ON
+                product.id = ${this.table}.product_id
+            LEFT JOIN 
                 ${process.env.MYSQL_DATABASE}.orders
             ON
                 orders.id = ${this.table}.orders_id;`;
@@ -39,8 +43,6 @@ class OrderDetailRepository {
                 result.product = (await new ProductRepository().selectOne({
                     id: result.product_id,
                 })) as Product;
-
-
             }
             return results;
 
@@ -51,7 +53,6 @@ class OrderDetailRepository {
         }
 
     };
-
     public selectOne = async (data: Partial<Order_detail>): Promise<Order_detail | unknown> => {
         //connexion au serveur MySQL
         //récupérer un enregistrement par sa clé primaire

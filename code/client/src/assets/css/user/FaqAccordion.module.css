@@ -1,0 +1,105 @@
+/* FaqAccordion.module.css */
+
+.accordionContainer {
+    max-width: 100%;
+    margin: 0 auto;
+    border-left: 1px solid #e6e6b3;
+    border-right: 1px solid #e6e6b3;
+  }
+  
+  .title {
+    font-size: 2rem;
+    text-align: center;
+    padding: 2rem 0;
+    margin: 0;
+    color: #000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .accordion {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 7rem;
+  }
+  
+  .accordionItem {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .accordionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .accordionQuestion {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #000;
+  }
+  
+  .accordionIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #000;
+  }
+  
+  .accordionContent {
+    padding: 0 2rem 1.5rem;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .highlighted {
+    position: relative;
+  }
+  
+  
+  
+  /* When item is active */
+  .active .accordionIcon {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Animation for opening/closing */
+  .accordionContent {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .accordionHeader {
+      padding: 1rem 1.5rem;
+    }
+    
+    .accordionContent {
+      padding: 0 1.5rem 1rem;
+    }
+    
+    .accordionQuestion {
+      font-size: 1rem;
+    }
+  }

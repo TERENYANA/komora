@@ -1,5 +1,4 @@
 import AdminProductForm from '@/component/admin/product/AdminProductForm'
-
 const AdminProductFormPage = () => {
   return (
       <div>
@@ -8,5 +7,4 @@ const AdminProductFormPage = () => {
     </div>
   )
 }
-
 export default AdminProductFormPage

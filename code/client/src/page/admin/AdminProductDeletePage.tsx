@@ -1,28 +1,30 @@
+import { useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "@/component/provider/UserProvider";
 import ProductAPI from "@/service/product_api";
 import SecurityAPI from "@/service/security_api";
-import { useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 
-const AdminProductDelatePage=()=>{
-    //récuperer l'id dans l'URL
-    const {id} = useParams();
-    //navigation
+const AdminProductDeletePage = () => {
+    // Récupérer l'ID dans l'URL
+    const { id } = useParams();
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
-    const { user} = useContext(UserContext);
 
-    useEffect(() =>{ 
-        //créer le formData
+    useEffect(() => {
+        if (!user || !id) return; // Sécurité : on attend que user et id soient bien définis
         const formData = new FormData();
-        formData.append("id", id as unknown as string);
-        new SecurityAPI().auth(user).then((authReponse)=> {
-            new ProductAPI().delete(formData,authReponse.data.token).then(()=>{
-                navigate('/admin/product');
-            });
-        });
+        formData.append("id", id);
 
-      
-    },[id,navigate]);
-    return<></>
-}
-export default AdminProductDelatePage;
+        new SecurityAPI().auth(user).then((authResponse) => {
+            new ProductAPI()
+                .delete(formData, authResponse.data.token)
+                .then(() => {
+                    navigate('/admin/product');
+                });
+        });
+    }, [id, navigate, user]);
+    
+    return <p>Suppression du produit en cours...</p>; // Affichage temporaire pendant l'exécution
+};
+
+export default AdminProductDeletePage;
