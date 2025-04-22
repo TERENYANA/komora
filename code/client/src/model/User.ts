@@ -12,7 +12,10 @@ type User = {
     number: string;
     address: string;
     role_id: number;
-    role: Role;
+    role: {
+        id: number;
+        name: string;
+    };
     order_id: number;
     order: Orders;
     address_ids: string;
