@@ -2,44 +2,49 @@ name: Komora Shop CI
 
 on:
   push:
-    branches: ["master"]
+    branches: ['master']
 
 jobs:
   Execute_my_CI:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Clone github repository
+      - name: Clone GitHub repository
         uses: actions/checkout@v4
-      
+
       - name: Install server dependencies
         run: |
           cd code/server
           npm ci
-      
-      - name: Install client dependencies
-        run: |
-          cd code/client
-          npm ci
-      
+
       - name: Compile server TypeScript files
         run: |
           cd code/server
           npm run compile
-      
+
+      - name: Install client dependencies
+        run: |
+          cd code/client
+          npm ci
+
+      - name: Clean build artifacts
+        run: rm -rf dist
+
       - name: Compile client TypeScript files
         run: |
           cd code/client
           npm run build
-      
+
       - name: Install test database
-        run: | 
+        run: |
           sudo service mysql start
           cd code/server/mysql
           mysql -uroot -proot -e 'SOURCE script.test.sql;'
           mysql -uroot -proot -e 'SHOW DATABASES;'
-      
+
       - name: Execute tests
         run: |
           cd code/server
           npm run test
+
     
