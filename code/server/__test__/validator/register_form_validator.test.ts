@@ -1,5 +1,5 @@
 import {describe,it,expect} from 'vitest';
-import RegisterFormValidator from "/app/src/validator/register_form_validator"
+import RegisterFormValidator from "../../src/validator/register_form_validator"
 
  describe ('register from validator tests suite',()=>{
     it("should be valide",async()=>{
