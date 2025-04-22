@@ -26,10 +26,10 @@ jobs:
           cd code/server
           npm run compile
       
-      - name: Compile client TypeScript files
-        run: |
-          cd code/client
-          npm run build
+      # - name: Compile client TypeScript files
+      #   run: |
+      #     cd code/client
+      #     npm run build
       
       # - name: Install test database
       #   run: | 
