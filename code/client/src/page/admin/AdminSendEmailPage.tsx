@@ -54,7 +54,7 @@ const AdminSendEmailPage = () => {
       </div>
 
       <div className={styles.field}>
-        <div className={styles.label}>Sujet :</div>
+        <div className={styles.label}>Subject:</div>
         <div className={styles.input}>{contact.subject}</div>
       </div>
 

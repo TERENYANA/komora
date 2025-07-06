@@ -156,6 +156,53 @@
     font-weight: 500;
     font-size: 0.925rem;
   }
+  /* Add any additional styles here */
+  /* Checkbox Container Styling */
+.checkboxContainer {
+  display: flex;
+  align-items: flex-start;
+  margin: 12px 0;
+  gap: 10px;
+}
+
+/* Checkbox Input Styling */
+.checkbox {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #4a90e2; /* Changes the color of the checkbox when checked */
+}
+
+/* Checkbox Label Styling */
+.checkboxLabel {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Error Message Styling */
+.errorText {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+/* Error State for Checkbox */
+.inputError {
+  outline: 2px solid #e74c3c;
+}
+
+/* Form Group Styling */
+.formGroup {
+  margin-bottom: 20px;
+}
+
+
+
+
   
   /* Media Queries */
   @media (max-width: 480px) {

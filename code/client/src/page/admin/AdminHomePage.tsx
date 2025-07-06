@@ -36,7 +36,7 @@ const ContactAdmin = () => {
 			
 			{/* Scroll indicator for small screens */}
 			<div className={styles.scrollIndicator}>
-				Faites défiler horizontalement pour voir toutes les données →
+			Scroll horizontally to see all the data →
 			</div>
 			
 			{/* Container with horizontal scroll */}

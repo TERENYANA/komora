@@ -219,6 +219,15 @@
   opacity: 1;
 }
 
+.checkboxContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+
+
 /* Media Queries */
 @media (max-width: 480px) {
   .loginContainer {

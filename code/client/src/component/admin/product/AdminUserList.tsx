@@ -13,7 +13,7 @@ const AdminUserList = () => {
     <div className={styles.productlist}>
       {/* Indicateur de défilement pour petits écrans */}
       <div className={styles.scrollIndicator}>
-        Faites défiler horizontalement pour voir toutes les données →
+      Scroll horizontally to see all the data →
       </div>
       {/* Conteneur avec défilement horizontal */}
       <div className={styles.tableContainer}>

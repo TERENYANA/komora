@@ -6,4 +6,5 @@ type Contact = {
     message: string; 
     contest: boolean;
 };
+
 export default Contact;

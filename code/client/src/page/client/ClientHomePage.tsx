@@ -1,13 +1,14 @@
+import styles from "@/assets/css/client/clienthome.module.css";
 
-import styles from "@/assets/css/user/home.module.css"
 const ClientHomePage = () => {
-	//Fragment:balisee anonyme <></>
-	return (
-		<main>
-			<div className={styles.homeBackground}>
-				<p>Welcome to your space</p>
-			</div>
-		</main>
-	);
+    return (
+        <div className={styles.container}>
+            <h1 className={styles.welcomeMessage}>Welcome to your space</h1>
+            <p className={styles.subMessage}>
+                We are still working on all functionalities. Stay tuned for exciting updates!
+            </p>
+        </div>
+    );
 };
+
 export default ClientHomePage;

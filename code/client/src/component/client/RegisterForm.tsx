@@ -13,8 +13,15 @@ const RegisterForm = () => {
 	} = useForm<User>();
 	const navigate = useNavigate();
 	const [message, setMessage] = useState<string>();
+	const [consentChecked, setConsentChecked] = useState(false);
+	const [consentError, setConsentError] = useState<string | null>(null);
 
 	const onSubmit = async (values: User) => {
+		if (!consentChecked) {
+			setConsentError("You must consent to our terms and privacy policy");
+			return;
+		}
+
 		try {
 			const request = await new SecurityAPI().register(values);
 			if ([200, 201].includes(request.status)) {
@@ -26,6 +33,13 @@ const RegisterForm = () => {
 		} catch (error) {
 			setMessage("Error - please try again");
 			console.error("Registration error, account already exists", error);
+		}
+	};
+
+	const handleConsentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setConsentChecked(e.target.checked);
+		if (e.target.checked) {
+			setConsentError(null);
 		}
 	};
 
@@ -143,7 +157,7 @@ const RegisterForm = () => {
 						</label>
 						<input
 							id="address"
-							type="text" // Changed from "address" to "text" (HTML5 doesn’t have type="address")
+							type="text"
 							className={`${styles.input} ${errors.address ? styles.inputError : ""}`}
 							{...register("address", {
 								required: "Address is required",
@@ -151,6 +165,24 @@ const RegisterForm = () => {
 						/>
 						{errors.address && (
 							<p className={styles.errorText}>{errors.address.message}</p>
+						)}
+					</div>
+
+					<div className={styles.formGroup}>
+						<div className={styles.checkboxContainer}>
+							<input
+								id="consent"
+								type="checkbox"
+								className={`${styles.checkbox} ${consentError ? styles.inputError : ""}`}
+								checked={consentChecked}
+								onChange={handleConsentChange}
+							/>
+							<label htmlFor="consent" className={styles.checkboxLabel}>
+								I agree to the terms and conditions and privacy policy
+							</label>
+						</div>
+						{consentError && (
+							<p className={styles.errorText}>{consentError}</p>
 						)}
 					</div>
 

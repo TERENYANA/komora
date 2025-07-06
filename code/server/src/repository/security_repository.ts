@@ -82,8 +82,6 @@ class SecurityRepository {
               ;
              `;
             
-
-    
           //récupérer les résultat de la requète
           //resultes represente le premier indice du du arrey
           // requetes préparées

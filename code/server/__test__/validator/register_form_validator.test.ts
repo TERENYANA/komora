@@ -27,7 +27,6 @@ import RegisterFormValidator from "../../src/validator/register_form_validator"
         //assert
           expect(actual).toEqual(expected);
  });
- 
  it("should be invalide",async()=>{
     //arrange
     const sut = new RegisterFormValidator();

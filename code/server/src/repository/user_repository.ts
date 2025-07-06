@@ -57,9 +57,7 @@ class UserRepository {
   public selectOne = async (data: Partial<User>): Promise<User | unknown> => {
     //connexion au serveur MySQL
     //récupérer un enregistrement par sa clé primaire
-
     const connection = await new MySQLService().connect();
-
     const sql = `
         SELECT 
             ${this.table}.*,
@@ -118,15 +116,11 @@ class UserRepository {
       const [results] = await connection.execute(sql, { email: email });
 
       const result = (results as User[]).shift() as User;
-
-
-
       return result;
     } catch (error) {
       return error;
     }
   };
-
   public update = async (data: Partial<User>): Promise<User | unknown> => {
     //connexion au serveur MySQL
     //récupérer un enregistrement par sa clé primaire
@@ -207,7 +201,6 @@ class UserRepository {
       return error;
     }
   };
-
   public delete = async (data: Partial<User>): Promise<User | unknown> => {
     //connexion au serveur MySQL
     //récupérer un enregistrement par sa clé primaire

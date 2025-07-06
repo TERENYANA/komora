@@ -12,7 +12,7 @@ const AdminOrdersList = () => {
   return (
     <div className={styles.productlist}>
       <div className={styles.scrollIndicator}>
-        Faites défiler horizontalement pour voir toutes les données →
+      Scroll horizontally to see all the data →
       </div>
 
       {/* Conteneur avec défilement horizontal */}

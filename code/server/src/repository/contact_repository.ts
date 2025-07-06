@@ -47,10 +47,10 @@ class ContactRepository {
         const db = new MongoDBService().connect();
         try{
             const result= await db.collection(this.collection).insertOne({
-                sujet: contactData.subject,
+                subject: contactData.subject,
                 name: contactData.name,
                 email: contactData.email,
-                comments: contactData.message,
+                message: contactData.message,
             });
             return result;
         }catch(error){
